@@ -3,3 +3,11 @@ spring:
     name: HiPerfJavaPersistence
   main:
     banner-mode: "off"
+  datasource:
+    url: jdbc:mysql://localhost:3306/hi_perf_java_pers
+    username: root
+    password: 123456
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: create-drop

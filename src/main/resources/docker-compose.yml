@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  mysql:
+    image: mysql:5.7.22
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: "hi_perf_java_pers"
+    ports:
+      - "3306:3306"
