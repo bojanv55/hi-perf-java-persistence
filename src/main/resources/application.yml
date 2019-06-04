@@ -11,6 +11,12 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: create-drop
+    properties:
+      hibernate:
+        generate_statistics: true
+        session:
+          events:
+            log: false #disable statistics in log, but leave in actuator
 management:
   endpoint:
     metrics:
