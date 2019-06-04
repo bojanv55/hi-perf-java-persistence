@@ -52,6 +52,28 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<!--
+					Add profile if needed to run *Test classes (Unit Tests) with different profile
+					than integration tests (*IT). This is valid only for maven runs (test and verify),
+					since IntelliJ will run *IT and *Test classes with both profiles active one after
+					the other (...active=surefire_prof ...active=failsafe_prof)
+				-->
+				<!--
+				<configuration>
+					<argLine>-Dspring.profiles.active=test</argLine>
+				</configuration>
+				-->
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<argLine>-Dspring.profiles.active=test</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
