@@ -1,6 +1,7 @@
 package me.vukas.hiperfjavapersistence.rest;
 
-import lombok.AllArgsConstructor;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 import me.vukas.hiperfjavapersistence.entity.StandaloneEntity;
 import me.vukas.hiperfjavapersistence.service.StandaloneEntityService;
 import org.springframework.http.HttpStatus;
@@ -10,13 +11,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
 @RestController
-@AllArgsConstructor
 public class HomeController {
 
   private StandaloneEntityService standaloneEntityService;
+
+  public HomeController(StandaloneEntityService standaloneEntityService){
+    this.standaloneEntityService = standaloneEntityService;
+  }
 
   @GetMapping("entity/{id}")
   public StandaloneEntity readEntity(@PathVariable Integer id){
