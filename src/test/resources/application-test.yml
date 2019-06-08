@@ -17,4 +17,4 @@ spring:
     generate-ddl: true
 logging:
   level:
-    org.hibernate.type: trace
+    org.hibernate.type.descriptor.sql: trace
