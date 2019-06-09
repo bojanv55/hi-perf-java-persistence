@@ -2,12 +2,10 @@ package me.vukas.hiperfjavapersistence.service;
 
 import me.vukas.hiperfjavapersistence.entity.identifier.numerical.IdentityGenerator;
 import me.vukas.hiperfjavapersistence.entity.identifier.numerical.SequenceGenerator;
+import me.vukas.hiperfjavapersistence.entity.identifier.numerical.TableGenerator;
 import me.vukas.hiperfjavapersistence.entity.identifier.uuid.AssignedUUIDGenerator;
 import me.vukas.hiperfjavapersistence.entity.identifier.uuid.UUIDGenerator;
-import me.vukas.hiperfjavapersistence.repository.AssignedUUIDGeneratorRepository;
-import me.vukas.hiperfjavapersistence.repository.IdentityGeneratorRepository;
-import me.vukas.hiperfjavapersistence.repository.SequenceGeneratorRepository;
-import me.vukas.hiperfjavapersistence.repository.UUIDGeneratorRepository;
+import me.vukas.hiperfjavapersistence.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -22,16 +20,19 @@ public class IdentifierService {
     private UUIDGeneratorRepository uuidGeneratorRepository;
     private IdentityGeneratorRepository identityGeneratorRepository;
     private SequenceGeneratorRepository sequenceGeneratorRepository;
+    private TableGeneratorRepository tableGeneratorRepository;
 
     public IdentifierService(AssignedUUIDGeneratorRepository assignedUUIDGeneratorRepository,
                              UUIDGeneratorRepository uuidGeneratorRepository,
                              IdentityGeneratorRepository identityGeneratorRepository,
-                             SequenceGeneratorRepository sequenceGeneratorRepository
+                             SequenceGeneratorRepository sequenceGeneratorRepository,
+                             TableGeneratorRepository tableGeneratorRepository
     ) {
         this.assignedUUIDGeneratorRepository = assignedUUIDGeneratorRepository;
         this.uuidGeneratorRepository = uuidGeneratorRepository;
         this.identityGeneratorRepository = identityGeneratorRepository;
         this.sequenceGeneratorRepository = sequenceGeneratorRepository;
+        this.tableGeneratorRepository = tableGeneratorRepository;
     }
 
     public void saveAssignedUUIDGenerator(AssignedUUIDGenerator generator){
@@ -52,5 +53,9 @@ public class IdentifierService {
 
     public List<SequenceGenerator> saveAllSequencesGenerators(Iterable<SequenceGenerator> sequences){
         return sequenceGeneratorRepository.saveAll(sequences);
+    }
+
+    public List<TableGenerator> saveAllTableGenerators(Iterable<TableGenerator> tgs){
+        return tableGeneratorRepository.saveAll(tgs);
     }
 }

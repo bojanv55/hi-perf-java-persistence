@@ -9,8 +9,8 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-public class SequenceGenerator {
+public class TableGenerator {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;    //generated in db - from DB sequence (if not supported by db - from table "hibernate_sequence"). Selects next_val and inserts.
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private Long id;    //selects identity from table "hibernate_sequences". Needs locking and is not scalable!
 }

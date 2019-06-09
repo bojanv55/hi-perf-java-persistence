@@ -2,6 +2,7 @@ package me.vukas.hiperfjavapersistence.service;
 
 import me.vukas.hiperfjavapersistence.entity.identifier.numerical.IdentityGenerator;
 import me.vukas.hiperfjavapersistence.entity.identifier.numerical.SequenceGenerator;
+import me.vukas.hiperfjavapersistence.entity.identifier.numerical.TableGenerator;
 import me.vukas.hiperfjavapersistence.entity.identifier.uuid.AssignedUUIDGenerator;
 import me.vukas.hiperfjavapersistence.entity.identifier.uuid.UUIDGenerator;
 import org.hibernate.id.IdentifierGenerationException;
@@ -77,6 +78,19 @@ public class IdentifierIT {
         List<SequenceGenerator> generatorList =
                 identifierService.saveAllSequencesGenerators(
                         Arrays.asList(sg1, sg2, sg3));
+
+        assertThat(generatorList).hasSize(3);
+    }
+
+    @Test
+    public void savingAllTableGeneratorsCanBeBatched(){
+        TableGenerator tg1 = new TableGenerator();
+        TableGenerator tg2 = new TableGenerator();
+        TableGenerator tg3 = new TableGenerator();
+
+        List<TableGenerator> generatorList =
+                identifierService.saveAllTableGenerators(
+                        Arrays.asList(tg1, tg2, tg3));
 
         assertThat(generatorList).hasSize(3);
     }
