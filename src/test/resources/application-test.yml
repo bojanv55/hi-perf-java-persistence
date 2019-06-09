@@ -4,6 +4,11 @@ spring:
   datasource:
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
     url: jdbc:tc:mysql:5.7.22://testcontainers/hi_perf_java_pers
+    hikari:
+      data-source-properties:
+        rewriteBatchedStatements: true
+        profileSQL: true
+        logger: com.mysql.jdbc.log.Slf4JLogger
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
@@ -14,7 +19,12 @@ spring:
         show_sql: true
         use_sql_comments: true
         format_sql: true
+        order_inserts: true
+        order_updates: true
+        jdbc:
+          batch_size: 100
     generate-ddl: true
 logging:
   level:
     org.hibernate.type.descriptor.sql: trace
+    com.zaxxer.hikari: debug
