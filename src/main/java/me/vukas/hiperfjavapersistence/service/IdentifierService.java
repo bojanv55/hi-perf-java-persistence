@@ -1,6 +1,7 @@
 package me.vukas.hiperfjavapersistence.service;
 
 import me.vukas.hiperfjavapersistence.entity.identifier.numerical.IdentityGenerator;
+import me.vukas.hiperfjavapersistence.entity.identifier.numerical.PooledSequenceGenerator;
 import me.vukas.hiperfjavapersistence.entity.identifier.numerical.SequenceGenerator;
 import me.vukas.hiperfjavapersistence.entity.identifier.numerical.TableGenerator;
 import me.vukas.hiperfjavapersistence.entity.identifier.uuid.AssignedUUIDGenerator;
@@ -21,18 +22,21 @@ public class IdentifierService {
     private IdentityGeneratorRepository identityGeneratorRepository;
     private SequenceGeneratorRepository sequenceGeneratorRepository;
     private TableGeneratorRepository tableGeneratorRepository;
+    private PooledSequenceGeneratorRepository pooledSequenceGeneratorRepository;
 
     public IdentifierService(AssignedUUIDGeneratorRepository assignedUUIDGeneratorRepository,
                              UUIDGeneratorRepository uuidGeneratorRepository,
                              IdentityGeneratorRepository identityGeneratorRepository,
                              SequenceGeneratorRepository sequenceGeneratorRepository,
-                             TableGeneratorRepository tableGeneratorRepository
+                             TableGeneratorRepository tableGeneratorRepository,
+                             PooledSequenceGeneratorRepository pooledSequenceGeneratorRepository
     ) {
         this.assignedUUIDGeneratorRepository = assignedUUIDGeneratorRepository;
         this.uuidGeneratorRepository = uuidGeneratorRepository;
         this.identityGeneratorRepository = identityGeneratorRepository;
         this.sequenceGeneratorRepository = sequenceGeneratorRepository;
         this.tableGeneratorRepository = tableGeneratorRepository;
+        this.pooledSequenceGeneratorRepository = pooledSequenceGeneratorRepository;
     }
 
     public void saveAssignedUUIDGenerator(AssignedUUIDGenerator generator){
@@ -57,5 +61,9 @@ public class IdentifierService {
 
     public List<TableGenerator> saveAllTableGenerators(Iterable<TableGenerator> tgs){
         return tableGeneratorRepository.saveAll(tgs);
+    }
+
+    public List<PooledSequenceGenerator> saveAllPooledSequencesGenerators(Iterable<PooledSequenceGenerator> sequences){
+        return pooledSequenceGeneratorRepository.saveAll(sequences);
     }
 }
