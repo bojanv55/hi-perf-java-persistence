@@ -6,6 +6,10 @@ import me.vukas.hiperfjavapersistence.repository.PostCommentManyRepository;
 import me.vukas.hiperfjavapersistence.repository.PostOneRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
+import java.text.MessageFormat;
+
 @Service
 public class ManyToOneService {
     private PostOneRepository postOneRepo;
@@ -16,12 +20,14 @@ public class ManyToOneService {
         this.postCommentRepo = postCommentRepo;
     }
 
+    @Transactional
     public PostCommentMany addNewCommentForPost(PostCommentMany comment, Long postId){
         return postOneRepo.findById(postId).map(p -> {
-            comment.setPost(p);
+            comment.commentToPost(p);
             postCommentRepo.save(comment);
             return comment;
-        }).orElse(comment);
+        }).orElseThrow(() -> new EntityNotFoundException(
+                MessageFormat.format("PostOne with id {0} is not found.", postId)));
     }
 
     public PostOne newPost(PostOne post){

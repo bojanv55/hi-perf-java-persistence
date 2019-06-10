@@ -14,4 +14,8 @@ public class PostCommentMany {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private PostOne post;
+
+    public void commentToPost(PostOne post){
+        this.post = post;
+    }
 }

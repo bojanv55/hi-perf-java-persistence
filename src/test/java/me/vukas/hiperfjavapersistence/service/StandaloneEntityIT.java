@@ -20,9 +20,7 @@ public class StandaloneEntityIT {
 
     @Test
     public void standaloneEntityOnSaveShouldBePersistedToDb(){
-        StandaloneEntity standaloneEntity = new StandaloneEntity();
-        standaloneEntity.setId(1);
-        standaloneEntity.setName("Test");
+        StandaloneEntity standaloneEntity = new StandaloneEntity(1, "Test");
 
         assertThat(standaloneEntityService.getStandaloneEntity(1)).isEmpty();
 

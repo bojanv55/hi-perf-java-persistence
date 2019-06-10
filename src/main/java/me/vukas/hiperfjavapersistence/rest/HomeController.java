@@ -1,7 +1,5 @@
 package me.vukas.hiperfjavapersistence.rest;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-
 import me.vukas.hiperfjavapersistence.entity.StandaloneEntity;
 import me.vukas.hiperfjavapersistence.service.StandaloneEntityService;
 import org.springframework.http.HttpStatus;
@@ -10,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
 public class HomeController {
@@ -29,9 +29,7 @@ public class HomeController {
   @GetMapping("entity/insert/{id}") //should be POST
   @ResponseStatus(HttpStatus.CREATED)
   public void addEntity(@PathVariable Integer id){
-    StandaloneEntity standaloneEntity = new StandaloneEntity();
-    standaloneEntity.setId(id);
-    standaloneEntity.setName("NameFor" + id);
+    StandaloneEntity standaloneEntity = new StandaloneEntity(id, "NameFor" + id);
     standaloneEntityService.saveStandaloneEntity(standaloneEntity);
   }
 
