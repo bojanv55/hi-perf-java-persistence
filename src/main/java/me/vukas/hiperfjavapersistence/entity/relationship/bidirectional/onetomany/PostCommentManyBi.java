@@ -1,12 +1,8 @@
 package me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import lombok.Data;
+
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -33,7 +29,7 @@ public class PostCommentManyBi {
   }
 
   /**
-   * In case that we use id here, initially it will be null and after persisted with AUTO_INCREMENT it will be changed.
+   * In case that we use id here, initially it will be null and after it is persisted with AUTO_INCREMENT it will be changed.
    * In ths situation - this object that was added in some HashSet etc. will potentially not be found in the future since
    * its hashCode changed while the object was inside HashSet.
    * @return 31
