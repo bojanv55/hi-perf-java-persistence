@@ -30,7 +30,7 @@ public class ManyToOneService {
                 MessageFormat.format("PostOne with id {0} is not found.", postId)));
     }
 
-    public PostOne newPost(PostOne post){
+    public PostOne addNewPost(PostOne post){
         return postOneRepo.save(post);
     }
 }

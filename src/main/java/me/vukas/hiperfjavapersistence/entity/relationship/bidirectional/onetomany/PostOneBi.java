@@ -18,4 +18,14 @@ public class PostOneBi {
   //orphanRemoval - when we set post field on PostCommentManyBi to null, that postCommentManyBi will be removed from db
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<PostCommentManyBi> comments = new HashSet<>();
+
+  public void addComment(PostCommentManyBi comment){
+    comments.add(comment);
+    comment.setPost(this);
+  }
+
+  public void removeComment(PostCommentManyBi comment){
+    comments.remove(comment);
+    comment.setPost(null);  //make this comment orphan, that will be removed from db
+  }
 }

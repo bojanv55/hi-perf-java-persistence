@@ -20,7 +20,7 @@ public class ManyToOneIT {
         PostOne post = new PostOne();
         PostCommentMany comment = new PostCommentMany();
 
-        post = manyToOneService.newPost(post);
+        post = manyToOneService.addNewPost(post);
         comment = manyToOneService.addNewCommentForPost(comment, post.getId());
     }
 
