@@ -18,7 +18,11 @@ public class OneToManyBiService {
         return postOneRepo.save(post);
     }
 
+    public PostOneBi changePost(PostOneBi post){
+        return postOneRepo.save(post);
+    }
+
     public Optional<PostOneBi> getPostById(Long postId){
-        return postOneRepo.findById(postId);
+        return postOneRepo.loadPostsByIdEagerly(postId);
     }
 }

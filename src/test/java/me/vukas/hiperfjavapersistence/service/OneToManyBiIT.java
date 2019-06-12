@@ -30,6 +30,14 @@ public class OneToManyBiIT {
             PostOneBi p2 = p;
             int x = 22;
         });
+
+        post.removeComment(comment2);
+        oneToManyBiService.changePost(post);
+
+        oneToManyBiService.getPostById(post.getId()).ifPresent(p -> {
+            PostOneBi p2 = p;
+            int x = 22;
+        });
     }
 
 }
