@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 @Data
 @RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true) //force - all final fields are initialized with 0 / false / null
 @Entity
 public class StandaloneEntity {
     @Id

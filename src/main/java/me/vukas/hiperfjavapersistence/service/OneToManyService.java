@@ -1,5 +1,6 @@
 package me.vukas.hiperfjavapersistence.service;
 
+import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.CompositeId;
 import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.PostOneUni;
 import me.vukas.hiperfjavapersistence.repository.relationship.onetomany.PostOneUniRepository;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class OneToManyService {
         return postOneRepo.save(post);
     }
 
-    public Optional<PostOneUni> getPostById(Long postId){
+    public Optional<PostOneUni> getPostById(CompositeId postId){
         return postOneRepo.findById(postId);
     }
 }

@@ -1,5 +1,6 @@
 package me.vukas.hiperfjavapersistence.service;
 
+import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.CompositeId;
 import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.PostCommentUniMany;
 import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.PostOneUni;
 import org.junit.Test;
@@ -20,6 +21,7 @@ public class OneToManyIT {
     @Test
     public void commentShouldBeAssignedToPost(){
         PostOneUni post = new PostOneUni();
+        post.setId(new CompositeId(100L,200L));
         PostCommentUniMany comment1 = new PostCommentUniMany();
         PostCommentUniMany comment2 = new PostCommentUniMany();
         PostCommentUniMany comment3 = new PostCommentUniMany();
