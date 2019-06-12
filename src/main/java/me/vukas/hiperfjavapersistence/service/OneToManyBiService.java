@@ -23,6 +23,6 @@ public class OneToManyBiService {
     }
 
     public Optional<PostOneBi> getPostById(Long postId){
-        return postOneRepo.loadPostsByIdEagerly(postId);
+        return postOneRepo.loadPostsByIdEagerlyWithSort(postId);
     }
 }

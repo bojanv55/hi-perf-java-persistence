@@ -1,5 +1,7 @@
 package me.vukas.hiperfjavapersistence.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostCommentManyBi;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi;
 import org.junit.Test;
@@ -24,19 +26,18 @@ public class OneToManyBiIT {
         post.addComment(comment1);
         post.addComment(comment2);
 
+        assertThat(comment1).isNotEqualTo(comment2);    //not equal even if ids are both null
+
         oneToManyBiService.addNewPost(post);
 
-        oneToManyBiService.getPostById(post.getId()).ifPresent(p -> {
-            PostOneBi p2 = p;
-            int x = 22;
-        });
+        oneToManyBiService.getPostById(post.getId()).ifPresent(p -> assertThat(p.getComments()).contains(comment1, comment2));
 
         post.removeComment(comment2);
         oneToManyBiService.changePost(post);
 
         oneToManyBiService.getPostById(post.getId()).ifPresent(p -> {
-            PostOneBi p2 = p;
-            int x = 22;
+            assertThat(p.getComments()).contains(comment1);
+            assertThat(p.getComments()).doesNotContain(comment2);
         });
     }
 
