@@ -1,4 +1,4 @@
-package me.vukas.hiperfjavapersistence.repository;
+package me.vukas.hiperfjavapersistence.repository.identifier.numerical;
 
 import me.vukas.hiperfjavapersistence.entity.identifier.numerical.PooledSequenceGenerator;
 import org.springframework.data.jpa.repository.JpaRepository;

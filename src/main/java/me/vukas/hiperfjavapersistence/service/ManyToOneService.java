@@ -2,8 +2,8 @@ package me.vukas.hiperfjavapersistence.service;
 
 import me.vukas.hiperfjavapersistence.entity.relationship.manytoone.PostCommentMany;
 import me.vukas.hiperfjavapersistence.entity.relationship.manytoone.PostOne;
-import me.vukas.hiperfjavapersistence.repository.PostCommentManyRepository;
-import me.vukas.hiperfjavapersistence.repository.PostOneRepository;
+import me.vukas.hiperfjavapersistence.repository.relationship.manytoone.PostCommentManyRepository;
+import me.vukas.hiperfjavapersistence.repository.relationship.manytoone.PostOneRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;

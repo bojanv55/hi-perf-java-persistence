@@ -6,10 +6,14 @@ import me.vukas.hiperfjavapersistence.entity.identifier.numerical.SequenceGenera
 import me.vukas.hiperfjavapersistence.entity.identifier.numerical.TableGenerator;
 import me.vukas.hiperfjavapersistence.entity.identifier.uuid.AssignedUUIDGenerator;
 import me.vukas.hiperfjavapersistence.entity.identifier.uuid.UUIDGenerator;
-import me.vukas.hiperfjavapersistence.repository.*;
+import me.vukas.hiperfjavapersistence.repository.identifier.numerical.IdentityGeneratorRepository;
+import me.vukas.hiperfjavapersistence.repository.identifier.numerical.PooledSequenceGeneratorRepository;
+import me.vukas.hiperfjavapersistence.repository.identifier.numerical.SequenceGeneratorRepository;
+import me.vukas.hiperfjavapersistence.repository.identifier.numerical.TableGeneratorRepository;
+import me.vukas.hiperfjavapersistence.repository.identifier.uuid.AssignedUUIDGeneratorRepository;
+import me.vukas.hiperfjavapersistence.repository.identifier.uuid.UUIDGeneratorRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

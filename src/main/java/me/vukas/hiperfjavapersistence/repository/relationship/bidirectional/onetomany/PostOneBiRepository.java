@@ -1,4 +1,4 @@
-package me.vukas.hiperfjavapersistence.repository;
+package me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.onetomany;
 
 import java.util.Optional;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi;
@@ -30,5 +30,10 @@ public interface PostOneBiRepository {
   @EntityGraph(attributePaths = "comments")
   Optional<PostOneBi> findById(Long id);
 
+  /**
+   * Since using JPA, this definition is routed to SimpleJpaRepository implementation
+   * @param post
+   * @return
+   */
   PostOneBi save(PostOneBi post);
 }
