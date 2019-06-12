@@ -3,12 +3,15 @@ package me.vukas.hiperfjavapersistence.repository;
 import java.util.Optional;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi;
 import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.RepositoryDefinition;
 
-@Repository
-public interface PostOneBiRepository extends JpaRepository<PostOneBi, Long> {
+/**
+ * Instead of extending JpaRepository (and exposing all of its methods), just expose methods specified
+ * in this interface
+ */
+@RepositoryDefinition(domainClass = PostOneBi.class, idClass = Long.class)
+public interface PostOneBiRepository {
 
   /**
    * Method that allows eager fetching of comments (like method below), but using Query
@@ -24,7 +27,8 @@ public interface PostOneBiRepository extends JpaRepository<PostOneBi, Long> {
    * do that eagerly. Inside attributePaths we specify attributes that should be JOINED during
    * fetching.
    */
-  @Override
   @EntityGraph(attributePaths = "comments")
   Optional<PostOneBi> findById(Long id);
+
+  PostOneBi save(PostOneBi post);
 }
