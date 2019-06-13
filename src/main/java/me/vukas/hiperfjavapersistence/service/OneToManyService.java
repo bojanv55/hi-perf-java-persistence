@@ -1,12 +1,12 @@
 package me.vukas.hiperfjavapersistence.service;
 
+import java.util.Optional;
+import javax.transaction.Transactional;
 import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.CompositeId;
 import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.PostOneUni;
 import me.vukas.hiperfjavapersistence.repository.relationship.onetomany.PostOneUniRepository;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 public class OneToManyService {
@@ -26,7 +26,12 @@ public class OneToManyService {
         return postOneRepo.save(post);
     }
 
+    @Transactional
     public Optional<PostOneUni> getPostById(CompositeId postId){
-        return postOneRepo.findById(postId);
+        return postOneRepo.findById(postId).map(p -> {
+            //SHOULD NOT BE USED THIS WAY, SINCE LOADS COMMENTS SEPARATELY
+            Hibernate.initialize(p.getComments());  //initialize lazily comments inside transaction
+            return Optional.of(p);
+        }).orElse(Optional.empty());
     }
 }

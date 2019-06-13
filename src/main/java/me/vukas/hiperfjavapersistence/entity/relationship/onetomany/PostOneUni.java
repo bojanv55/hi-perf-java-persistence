@@ -9,8 +9,12 @@ import java.util.Set;
 @Data
 @Entity
 public class PostOneUni {
+
     @EmbeddedId //if @Id, class CompositeId must be annotated @Embeddable?
     private CompositeId id;
+
+    @Embedded
+    private CombinationOfAttribs combination;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumns({

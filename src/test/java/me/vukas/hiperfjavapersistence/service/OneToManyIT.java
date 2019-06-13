@@ -1,5 +1,8 @@
 package me.vukas.hiperfjavapersistence.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.CombinationOfAttribs;
 import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.CompositeId;
 import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.PostCommentUniMany;
 import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.PostOneUni;
@@ -8,8 +11,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -22,6 +23,7 @@ public class OneToManyIT {
     public void commentShouldBeAssignedToPost(){
         PostOneUni post = new PostOneUni();
         post.setId(new CompositeId(100L,200L));
+        post.setCombination(new CombinationOfAttribs("a1", 1, 1.0F));
         PostCommentUniMany comment1 = new PostCommentUniMany();
         PostCommentUniMany comment2 = new PostCommentUniMany();
         PostCommentUniMany comment3 = new PostCommentUniMany();
@@ -36,7 +38,9 @@ public class OneToManyIT {
 
         oneToManyService.addNewPost(post);
 
-        oneToManyService.getPostById(post.getId()).ifPresent(p -> assertThat(p.getComments()).contains(comment1, comment2));
+        oneToManyService.getPostById(post.getId()).ifPresent(p -> {
+            assertThat(p.getComments()).contains(comment1, comment2);
+        });
 
         post.removeComment(comment2);
         oneToManyService.changePost(post);
@@ -46,4 +50,5 @@ public class OneToManyIT {
             assertThat(p.getComments()).doesNotContain(comment2);
         });
     }
+
 }
