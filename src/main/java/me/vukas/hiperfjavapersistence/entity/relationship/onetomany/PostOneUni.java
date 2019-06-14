@@ -23,6 +23,9 @@ public class PostOneUni {
     })
     private Set<PostCommentUniMany> comments = new HashSet<>();
 
+    @Version
+    private Integer version;
+
     public void addComment(PostCommentUniMany comment){
         this.comments.add(comment);
     }
