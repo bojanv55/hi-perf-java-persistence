@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Data
 @Entity
-public class PostOneBi {
+public class PostOneBi {  //BEST WAY TO MAP @OneToMany (if only @ManyToOne is not enough)
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Data
 @Entity
-public class PostOneUni {
+public class PostOneUni {   //BETTER USE PostOneBi @OneToMany mapping (bidirectional)
 
     @EmbeddedId //if @Id, class CompositeId must be annotated @Embeddable?
     private CompositeId id;
