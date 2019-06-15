@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class PostOneToOneService {
+public class OneToOneService {
 
     private PostOneToOneRepository postOneToOneRepository;
     private PostDetailsOneRepository postDetailsOneRepository;
 
-    public PostOneToOneService(PostOneToOneRepository postOneToOneRepository, PostDetailsOneRepository postDetailsOneRepository) {
+    public OneToOneService(PostOneToOneRepository postOneToOneRepository, PostDetailsOneRepository postDetailsOneRepository) {
         this.postOneToOneRepository = postOneToOneRepository;
         this.postDetailsOneRepository = postDetailsOneRepository;
     }
