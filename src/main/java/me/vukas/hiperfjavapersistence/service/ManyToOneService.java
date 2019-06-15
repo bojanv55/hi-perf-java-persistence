@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.text.MessageFormat;
+import java.util.Optional;
 
 @Service
 public class ManyToOneService {
@@ -32,5 +33,9 @@ public class ManyToOneService {
 
     public PostOne addNewPost(PostOne post){
         return postOneRepo.save(post);
+    }
+
+    public Optional<PostCommentMany> getCommentById(Long id){
+        return postCommentRepo.findById(id);
     }
 }

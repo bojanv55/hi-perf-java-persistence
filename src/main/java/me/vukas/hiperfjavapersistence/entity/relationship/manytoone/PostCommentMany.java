@@ -11,7 +11,7 @@ public class PostCommentMany {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)  //default is eager
     @JoinColumn(name = "post_id")
     private PostOne post;
 
