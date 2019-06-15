@@ -10,10 +10,10 @@ import java.util.Set;
 @Entity
 public class PostOneUni {   //BETTER USE PostOneBi @OneToMany mapping (bidirectional)
 
-    @EmbeddedId //if @Id, class CompositeId must be annotated @Embeddable?
+    @Id //if @Id, class CompositeId must be annotated @Embeddable? Otherwise @EmbeddedId
     private CompositeId id;
 
-    @Embedded
+    //@Embedded //Since @Embeddable, @Embedded not needed
     private CombinationOfAttribs combination;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
