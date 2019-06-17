@@ -5,15 +5,19 @@ spring:
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
     url: jdbc:tc:mysql:5.7.22://testcontainers/hi_perf_java_pers?rewriteBatchedStatements=true&profileSQL=true&logger=com.mysql.cj.log.Slf4JLogger
     hikari:
+      auto-commit: false  #do not auto commit on connection release (must be manual)
       data-source-properties:
         socketTimeout: 30_000
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL57Dialect
     show-sql: true
     hibernate:
       ddl-auto: create-drop
     properties:
       hibernate:
+        connection:
+          #https://vladmihalcea.com/why-you-should-always-use-hibernate-connection-provider_disables_autocommit-for-resource-local-jpa-transactions/
+          provider_disables_autocommit: true #tell hibernate that we set "auto-commit: false" for hikari
         show_sql: true
         use_sql_comments: true  #forwarded to db, so wastes network bandwidth
         format_sql: true

@@ -7,12 +7,16 @@ spring:
     url: jdbc:mysql://localhost:3306/hi_perf_java_pers
     username: root
     password: 123456
+#    hikari:
+#      auto-commit: false
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL57Dialect
     hibernate:
       ddl-auto: create-drop
     properties:
       hibernate:
+#        connection:
+#          provider_disables_autocommit: true
         generate_statistics: true #generate hibernate_* statistics at http://localhost:8080/actuator/prometheus
         session:
           events:
