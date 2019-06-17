@@ -14,10 +14,14 @@ public class PostWithCollection {
     private Long id;
 
     //post_with_collection_list_of_strings (post_with_collection_id, list_of_strings)
+    //should be SET, since LIST is not optimal
+    //consider using bidirectional one-to-many association
     @ElementCollection  //generates table with one string column and FK to this entity
     private List<String> listOfStrings = new ArrayList<>();
 
     //post_with_collection_list_of_complex (post_with_collection_id, attrib1, attrib2, attrib3)
+    //should be SET, since LIST is not optimal
+    //consider using bidirectional one-to-many association
     @ElementCollection//generates table with columns from ComplexElement and FK to this entity
     private List<ComplexElement> listOfComplex = new ArrayList<>();
 
