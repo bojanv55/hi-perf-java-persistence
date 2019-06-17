@@ -17,7 +17,8 @@ spring:
       hibernate:
         connection:
           #https://vladmihalcea.com/why-you-should-always-use-hibernate-connection-provider_disables_autocommit-for-resource-local-jpa-transactions/
-          provider_disables_autocommit: true #tell hibernate that we set "auto-commit: false" for hikari
+          #tell hibernate that we set "auto-commit: false" for hikari
+          provider_disables_autocommit: true
         show_sql: true
         use_sql_comments: true  #forwarded to db, so wastes network bandwidth
         format_sql: true
@@ -25,6 +26,14 @@ spring:
         order_updates: true
         jdbc:
           batch_size: 100
+        query:
+          #https://vladmihalcea.com/hibernate-query-fail-on-pagination-over-collection-fetch/
+          #prevent hibernate to load 1000 records, just to discard 80% of them when limiting results
+          fail_on_pagination_over_collection_fetch: true
+          #https://vladmihalcea.com/improve-statement-caching-efficiency-in-clause-parameter-padding/
+          #makes possible to reuse query like IN(?) for many arguments that is reusing same execution
+          #plan -> e.g. when call IN(1,2) and IN(1,2,3) translated to -> IN(1,2,2) and (1,2,3)
+          in_clause_parameter_padding: true
     generate-ddl: true
 logging:
   level:
