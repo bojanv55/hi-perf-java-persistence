@@ -1,7 +1,7 @@
 package me.vukas.hiperfjavapersistence.service;
 
-import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.manytomany.PostManyBi;
-import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.manytomany.TagManyBi;
+import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.manytomany.BookManyBi;
+import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.manytomany.AuthorManyBi;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +16,16 @@ public class ManyToManyBiIT {
   private ManyToManyBiService service;
 
   @Test
-  public void savingPostSavesTags(){
-    PostManyBi post = new PostManyBi();
-    post.addTag(new TagManyBi("one"));
-    post.addTag(new TagManyBi("two"));
-    post.addTag(new TagManyBi("three"));
+  public void savingBookSavesAuthors(){
+    BookManyBi book = new BookManyBi();
+    book.addAuthor(new AuthorManyBi("Pavel"));
+    book.addAuthor(new AuthorManyBi("Janko"));
+    book.addAuthor(new AuthorManyBi("Marko"));
 
-    service.savePost(post);
+    service.saveBook(book);
 
-    post.removeTag(new TagManyBi("two"));
+    book.removeAuthor(new AuthorManyBi("Janko"));
 
-    service.savePost(post);
+    service.saveBook(book);
   }
 }

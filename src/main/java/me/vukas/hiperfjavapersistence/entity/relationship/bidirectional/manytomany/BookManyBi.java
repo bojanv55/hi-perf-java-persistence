@@ -12,23 +12,23 @@ import lombok.Data;
 
 @Data
 @Entity
-public class PostManyBi {
+public class BookManyBi {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   //using SET, we don't need to re-insert elements, if order needed use @OrderBy or @OrderColumn
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-  private Set<TagManyBi> tags = new HashSet<>();
+  private Set<AuthorManyBi> authors = new HashSet<>();
 
-  public void addTag(TagManyBi tag){
-    tag.getPosts().add(this);
-    tags.add(tag);
+  public void addAuthor(AuthorManyBi author){
+    author.getBooks().add(this);
+    authors.add(author);
   }
 
-  public void removeTag(TagManyBi tag){
-    tag.getPosts().remove(this);
-    tags.remove(tag);
+  public void removeAuthor(AuthorManyBi author){
+    author.getBooks().remove(this);
+    authors.remove(author);
   }
 
   @Override
@@ -36,10 +36,10 @@ public class PostManyBi {
     if(o == this){
       return true;
     }
-    if(!(o instanceof PostManyBi)){
+    if(!(o instanceof BookManyBi)){
       return false;
     }
-    PostManyBi pc = (PostManyBi)o;
+    BookManyBi pc = (BookManyBi)o;
     //while object is still not persisted to DB (null) we cannot compare it to any other object (except by reference (o == this))
     return id != null && id.equals(pc.id);
   }

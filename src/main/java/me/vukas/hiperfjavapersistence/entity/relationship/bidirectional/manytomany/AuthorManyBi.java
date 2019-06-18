@@ -16,7 +16,7 @@ import org.hibernate.annotations.NaturalId;
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @Entity
-public class TagManyBi {
+public class AuthorManyBi {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -25,10 +25,10 @@ public class TagManyBi {
   private String name;
 
   //using SET, we don't need to re-insert elements, if order needed use @OrderBy or @OrderColumn
-  @ManyToMany(mappedBy = "tags")  //property name in PostManyBi
-  private Set<PostManyBi> posts = new HashSet<>();
+  @ManyToMany(mappedBy = "authors")  //property name in PostManyBi
+  private Set<BookManyBi> books = new HashSet<>();
 
-  public TagManyBi(String name) {
+  public AuthorManyBi(String name) {
     this.name = name;
   }
 
@@ -37,10 +37,10 @@ public class TagManyBi {
     if(o == this){
       return true;
     }
-    if(!(o instanceof TagManyBi)){
+    if(!(o instanceof AuthorManyBi)){
       return false;
     }
-    TagManyBi tg = (TagManyBi)o;
+    AuthorManyBi tg = (AuthorManyBi)o;
     return Objects.equals(name, tg.name);
   }
 

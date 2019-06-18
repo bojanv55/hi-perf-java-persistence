@@ -1,22 +1,22 @@
 package me.vukas.hiperfjavapersistence.service;
 
 import javax.transaction.Transactional;
-import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.manytomany.PostManyBi;
-import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.manytomany.PostManyBiRepository;
+import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.manytomany.BookManyBi;
+import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.manytomany.BookManyBiRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ManyToManyBiService {
 
-  private PostManyBiRepository repository;
+  private BookManyBiRepository repository;
 
   public ManyToManyBiService(
-      PostManyBiRepository repository) {
+      BookManyBiRepository repository) {
     this.repository = repository;
   }
 
   @Transactional
-  public void savePost(PostManyBi post){
-    repository.save(post);
+  public void saveBook(BookManyBi book){
+    repository.save(book);
   }
 }
