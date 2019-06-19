@@ -39,9 +39,9 @@ public class BookManyBi {
     if(!(o instanceof BookManyBi)){
       return false;
     }
-    BookManyBi pc = (BookManyBi)o;
+    BookManyBi b = (BookManyBi)o;
     //while object is still not persisted to DB (null) we cannot compare it to any other object (except by reference (o == this))
-    return id != null && id.equals(pc.id);
+    return id != null && id.equals(b.id);
   }
 
   /**
