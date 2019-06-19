@@ -1,15 +1,11 @@
 package me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.manytomanyjunction;
 
+import lombok.Data;
+
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import lombok.Data;
 
 @Data
 @Entity
@@ -22,12 +18,9 @@ public class BookManyJ {
   private Set<BookAuthor> authors = new HashSet<>();
 
   public void addAuthor(AuthorManyJ author){
-    BookAuthorId bookAuthorId = new BookAuthorId(id, author.getId());
-    BookAuthor bookAuthor = new BookAuthor();
-    bookAuthor.setId(bookAuthorId);
-    bookAuthor.setBook(this);
-    bookAuthor.setAuthor(author);
+    BookAuthor bookAuthor = new BookAuthor(this, author);
     authors.add(bookAuthor);
+    author.getBooks().add(bookAuthor);
   }
 
   public void removeAuthor(AuthorManyJ author){

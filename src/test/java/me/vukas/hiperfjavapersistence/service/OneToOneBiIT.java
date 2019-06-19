@@ -29,6 +29,13 @@ public class OneToOneBiIT {
 
         service.savePost(post);
 
+        PostOneToOneBi post2 = new PostOneToOneBi();
+        post2.setContent("content2");
+
+        service.savePost(post2);
+
+        int x = 22;
+
         service.loadPost(post.getId()).ifPresent(p -> {
             assertThat(p.getDetails()).isNotNull();
         });
