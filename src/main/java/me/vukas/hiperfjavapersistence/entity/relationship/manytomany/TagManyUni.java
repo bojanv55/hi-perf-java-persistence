@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.NaturalId;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -18,7 +17,8 @@ public class TagManyUni {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NaturalId
+  //here we should have index in db on name
+  //and unique constraint
   private String name;
 
   public TagManyUni(String name) {

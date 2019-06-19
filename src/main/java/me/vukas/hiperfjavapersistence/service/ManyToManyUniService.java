@@ -1,22 +1,42 @@
 package me.vukas.hiperfjavapersistence.service;
 
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import me.vukas.hiperfjavapersistence.entity.relationship.manytomany.PostManyUni;
+import me.vukas.hiperfjavapersistence.entity.relationship.manytomany.TagManyUni;
 import me.vukas.hiperfjavapersistence.repository.relationship.manytomany.PostManyUniRepository;
+import me.vukas.hiperfjavapersistence.repository.relationship.manytomany.TagManyUniRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ManyToManyUniService {
 
-  private PostManyUniRepository repository;
+  private PostManyUniRepository postRepo;
+  private TagManyUniRepository tagRepo;
 
   public ManyToManyUniService(
-      PostManyUniRepository repository) {
-    this.repository = repository;
+      PostManyUniRepository postRepo,
+      TagManyUniRepository tagRepo) {
+    this.postRepo = postRepo;
+    this.tagRepo = tagRepo;
   }
 
   @Transactional
   public void savePost(PostManyUni post){
-    repository.save(post);
+    Set<TagManyUni> tags = post.getTags();
+    Set<TagManyUni> persistedTags = tagRepo.findAllByNameIn(tags.stream().map(TagManyUni::getName).collect(
+        Collectors.toSet()));
+
+    persistedTags.forEach(post::removeTag);
+    persistedTags.forEach(post::addTag);
+
+    postRepo.save(post);
+  }
+
+  @Transactional
+  public Optional<PostManyUni> getPost(Long id) {
+    return postRepo.findById(id);
   }
 }

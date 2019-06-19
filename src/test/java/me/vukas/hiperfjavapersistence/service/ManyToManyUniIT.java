@@ -32,5 +32,12 @@ public class ManyToManyUniIT {
     post.removeTag(new TagManyUni("tag2"));
 
     service.savePost(post);
+
+    //how to save tags without loading all tags in post (since it is lazy)
+//    service.getPost(1L).ifPresent(p -> {
+//      p.addTag(new TagManyUni("tag2"));
+//      p.addTag(new TagManyUni("tag200"));
+//      service.savePost(p);
+//    });
   }
 }
