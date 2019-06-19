@@ -1,17 +1,16 @@
 package me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.manytomany;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NaturalId;
+
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import lombok.Data;
-import org.hibernate.annotations.NaturalId;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class AuthorManyBi {
   @Id
