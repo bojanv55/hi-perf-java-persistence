@@ -89,6 +89,30 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<!--
+			<plugin>
+				<groupId>org.hibernate.orm.tooling</groupId>
+				<artifactId>hibernate-enhance-maven-plugin</artifactId>
+				<version>${hibernate.version}</version>
+				<executions>
+					<execution>
+						<configuration>
+							<failOnError>true</failOnError>
+							//lazy initialization for properties (eg. String) in single class. Not related to relations
+							<enableLazyInitialization>true</enableLazyInitialization>
+							//instead of comparing all objects, hibernate keeps track of internal state changes
+							<enableDirtyTracking>false</enableDirtyTracking>
+							//automatic linking of other side of association with objects, so instead
+							// this.books.add(book); book.writtenBy(this); we only need this.books.add(book);
+							<enableAssociationManagement>false</enableAssociationManagement>
+						</configuration>
+						<goals>
+							<goal>enhance</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			-->
 		</plugins>
 	</build>
 
