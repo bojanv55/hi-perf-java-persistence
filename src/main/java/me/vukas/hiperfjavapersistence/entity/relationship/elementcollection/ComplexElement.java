@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @Embeddable //must be embeddable since it is used inside @ElementCollection as value object
 public class ComplexElement {
-    private String attrib1;
-    private Integer attrib2;
-    private Float attrib3;
+    private final String attrib1;
+    private final Integer attrib2;
+    private final Float attrib3;
 }

@@ -97,7 +97,6 @@
 				<executions>
 					<execution>
 						<configuration>
-							<failOnError>true</failOnError>
 							//lazy initialization for properties (eg. String) in single class. Not related to relations
 							<enableLazyInitialization>true</enableLazyInitialization>
 							//instead of comparing all objects, hibernate keeps track of internal state changes

@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @Embeddable //not necessary, but to be consistent with @ElementCollection where it has to be @Embeddable
 public class CombinationOfAttribs {
-  private String attrib1;
-  private Integer attrib2;
-  private Float attrib3;
+  private final String attrib1;
+  private final Integer attrib2;
+  private final Float attrib3;
 }
