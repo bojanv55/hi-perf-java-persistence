@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import me.vukas.hiperfjavapersistence.entity.inheritance.jointable.Child1Jt;
 import me.vukas.hiperfjavapersistence.entity.inheritance.jointable.Child2Jt;
 import me.vukas.hiperfjavapersistence.entity.inheritance.jointable.ParentJt;
+import me.vukas.hiperfjavapersistence.entity.inheritance.mappedsuperclass.Child1Ms;
+import me.vukas.hiperfjavapersistence.entity.inheritance.mappedsuperclass.Child2Ms;
 import me.vukas.hiperfjavapersistence.entity.inheritance.singletable.Child1St;
 import me.vukas.hiperfjavapersistence.entity.inheritance.singletable.Child2St;
 import me.vukas.hiperfjavapersistence.entity.inheritance.singletable.ParentSt;
@@ -97,6 +99,29 @@ public class InheritanceIT {
     service.saveParentTPC(child2);
 
     service.getParentTPC(child2.getId()).ifPresent(c -> {
+      assertThat(c.getName()).isEqualTo("child2");
+    });
+
+  }
+
+  @Test
+  public void msInheritance(){
+
+    Child1Ms child1 = new Child1Ms();
+    child1.setName("child1");
+    child1.setChild1Prop("prop1");
+
+    service.saveParentMs(child1);
+
+    Child2Ms child2 = new Child2Ms();
+    child2.setName("child2");
+    child2.setChild2Prop("prop2");
+
+    service.saveParentMs(child2);
+
+    //cannot use parentRepo for queries on children when
+    //using @MappedSuperclass
+    service.getChild2Ms(child2.getId()).ifPresent(c -> {
       assertThat(c.getName()).isEqualTo("child2");
     });
 
