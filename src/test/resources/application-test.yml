@@ -22,7 +22,10 @@ spring:
         show_sql: true
         use_sql_comments: true  #forwarded to db, so wastes network bandwidth
         format_sql: true
+        #order inserts not to be interleaved (parent,children,parent,children) so batching works when inserting one-to-many entities
+        #and then reordered to (parent,parent) and then (children,children) which can be batched
         order_inserts: true
+        #same as inserts, but for updating
         order_updates: true
         jdbc:
           batch_size: 100
