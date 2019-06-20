@@ -3,7 +3,7 @@ package me.vukas.hiperfjavapersistence.service;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import me.vukas.hiperfjavapersistence.entity.relationship.manytomany.PostManyUni;
 import me.vukas.hiperfjavapersistence.entity.relationship.manytomany.TagManyUni;
 import me.vukas.hiperfjavapersistence.repository.relationship.manytomany.PostManyUniRepository;
@@ -35,7 +35,7 @@ public class ManyToManyUniService {
     postRepo.save(post);
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
   public Optional<PostManyUni> getPost(Long id) {
     return postRepo.findById(id);
   }

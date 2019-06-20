@@ -5,6 +5,7 @@ import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.onet
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OneToManyBiService {
@@ -22,6 +23,7 @@ public class OneToManyBiService {
         return postOneRepo.save(post);
     }
 
+    @Transactional(readOnly = true)
     public Optional<PostOneBi> getPostById(Long postId){
         return postOneRepo.loadPostsByIdEagerlyWithSort(postId);
     }

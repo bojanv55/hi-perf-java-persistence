@@ -1,7 +1,7 @@
 package me.vukas.hiperfjavapersistence.service;
 
 import java.util.Optional;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.CompositeId;
 import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.PostOneUni;
 import me.vukas.hiperfjavapersistence.repository.relationship.onetomany.PostOneUniRepository;

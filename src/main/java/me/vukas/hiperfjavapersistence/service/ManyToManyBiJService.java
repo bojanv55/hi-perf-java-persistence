@@ -8,7 +8,7 @@ import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.many
 import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.manytomanyjunction.BookManyJRepository;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -32,7 +32,7 @@ public class ManyToManyBiJService {
     return authorManyJRepository.save(author);
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
   public Optional<BookManyJ> getBook(Long bookId){
     return repository.findById(bookId);
   }

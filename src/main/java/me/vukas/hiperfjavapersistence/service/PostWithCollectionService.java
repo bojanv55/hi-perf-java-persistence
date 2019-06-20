@@ -5,7 +5,7 @@ import me.vukas.hiperfjavapersistence.repository.relationship.elementcollection.
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service

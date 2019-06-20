@@ -7,7 +7,7 @@ import me.vukas.hiperfjavapersistence.repository.relationship.manytoone.PostOneR
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.text.MessageFormat;
 import java.util.Optional;
 
@@ -35,6 +35,7 @@ public class ManyToOneService {
         return postOneRepo.save(post);
     }
 
+    @Transactional(readOnly = true)
     public Optional<PostCommentMany> getCommentById(Long id){
         return postCommentRepo.findById(id);
     }

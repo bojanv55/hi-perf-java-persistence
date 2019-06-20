@@ -1,7 +1,6 @@
 package me.vukas.hiperfjavapersistence.service;
 
 import java.util.Optional;
-import javax.transaction.Transactional;
 import me.vukas.hiperfjavapersistence.entity.inheritance.jointable.ParentJt;
 import me.vukas.hiperfjavapersistence.entity.inheritance.mappedsuperclass.Child2Ms;
 import me.vukas.hiperfjavapersistence.entity.inheritance.mappedsuperclass.ParentMs;
@@ -13,6 +12,7 @@ import me.vukas.hiperfjavapersistence.repository.inheritance.mappedsuperclass.Pa
 import me.vukas.hiperfjavapersistence.repository.inheritance.singletable.ParentStRepository;
 import me.vukas.hiperfjavapersistence.repository.inheritance.tableperclass.ParentTPCRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class InheritanceService {
@@ -68,6 +68,7 @@ public class InheritanceService {
     return parentTPCRepository.findById(id);
   }
 
+  @Transactional(readOnly = true)
   public Optional<Child2Ms> getChild2Ms(Long id) {
     return child2MsRepository.findById(id);
   }
