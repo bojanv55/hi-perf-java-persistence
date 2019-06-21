@@ -11,6 +11,10 @@ public class PostCommentMany {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String comment;
+
+    private OtherAttribs otherAttribs;
+
     @ManyToOne(fetch = FetchType.LAZY)  //default is eager
     @JoinColumn(name = "post_id")
     private PostOne post;

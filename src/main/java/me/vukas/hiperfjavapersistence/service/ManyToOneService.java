@@ -1,24 +1,32 @@
 package me.vukas.hiperfjavapersistence.service;
 
+import java.text.MessageFormat;
+import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import me.vukas.hiperfjavapersistence.dto.manytoone.PostOneDtoRead;
+import me.vukas.hiperfjavapersistence.dto.manytoone.PostOneDtoWrite;
 import me.vukas.hiperfjavapersistence.entity.relationship.manytoone.PostCommentMany;
 import me.vukas.hiperfjavapersistence.entity.relationship.manytoone.PostOne;
+import me.vukas.hiperfjavapersistence.mapper.manytoone.PostOneDtoMapper;
 import me.vukas.hiperfjavapersistence.repository.relationship.manytoone.PostCommentManyRepository;
 import me.vukas.hiperfjavapersistence.repository.relationship.manytoone.PostOneRepository;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
-import java.text.MessageFormat;
-import java.util.Optional;
 
 @Service
 public class ManyToOneService {
     private PostOneRepository postOneRepo;
     private PostCommentManyRepository postCommentRepo;
 
-    public ManyToOneService(PostOneRepository postOneRepo, PostCommentManyRepository postCommentRepo) {
+    private PostOneDtoMapper postOneDtoMapper;
+
+    public ManyToOneService(
+        PostOneRepository postOneRepo,
+        PostCommentManyRepository postCommentRepo,
+        PostOneDtoMapper postOneDtoMapper) {
         this.postOneRepo = postOneRepo;
         this.postCommentRepo = postCommentRepo;
+        this.postOneDtoMapper = postOneDtoMapper;
     }
 
     @Transactional
@@ -38,5 +46,17 @@ public class ManyToOneService {
     @Transactional(readOnly = true)
     public Optional<PostCommentMany> getCommentById(Long id){
         return postCommentRepo.findById(id);
+    }
+
+    @Transactional
+    public void newPostFromDto(PostOneDtoWrite postDto){
+        PostOne post = postOneDtoMapper.map(postDto);
+        post.doSomeBusinessLogic();
+        postOneRepo.save(post);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<PostOneDtoRead> getPostToDto(Long postId){
+        return postOneRepo.projectPostOne(postId);
     }
 }
