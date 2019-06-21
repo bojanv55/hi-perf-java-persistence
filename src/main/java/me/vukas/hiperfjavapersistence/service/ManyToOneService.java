@@ -57,6 +57,6 @@ public class ManyToOneService {
 
     @Transactional(readOnly = true)
     public Optional<PostOneDtoRead> getPostToDto(Long postId){
-        return postOneRepo.projectPostOne(postId);
+        return postOneRepo.findById(postId).map(p -> postOneDtoMapper.map(p));
     }
 }
