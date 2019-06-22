@@ -21,6 +21,7 @@ spring:
         session:
           events:
             log: false #disable statistics in log, but leave in actuator
+    open-in-view: false #do not let view to lazy init properties from entities
 management:
   endpoint:
     metrics:

@@ -15,6 +15,7 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
+        enable_lazy_load_no_trans: false #do not allow lazy load without existing transaction
         connection:
           #https://vladmihalcea.com/why-you-should-always-use-hibernate-connection-provider_disables_autocommit-for-resource-local-jpa-transactions/
           #tell hibernate that we set "auto-commit: false" for hikari

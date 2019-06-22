@@ -13,6 +13,9 @@ public class PostOneBi {  //BEST WAY TO MAP @OneToMany (if only @ManyToOne is no
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Enumerated(EnumType.STRING)
+  private SomeEnum enumeration;
+
   //mappedBy = "post" --> post is attribute name inside PostCommentManyBi class (private PostOneBi post;)
   //cascade - entity state transitions are cascaded from PostOneBi to PostCommentManyBi
   //orphanRemoval - when we set post field on PostCommentManyBi to null, that postCommentManyBi will be removed from db
