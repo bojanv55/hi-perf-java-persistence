@@ -1,10 +1,12 @@
 package me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.onetomany;
 
-import java.util.Optional;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi;
+import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi_;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.RepositoryDefinition;
+
+import java.util.Optional;
 
 /**
  * Instead of extending JpaRepository (and exposing all of its methods), just expose methods specified
@@ -27,13 +29,11 @@ public interface PostOneBiRepository {
    * do that eagerly. Inside attributePaths we specify attributes that should be JOINED during
    * fetching.
    */
-  @EntityGraph(attributePaths = "comments")
+  @EntityGraph(attributePaths = PostOneBi_.COMMENTS)  //using generated static fields from hibernate jpamodelgen
   Optional<PostOneBi> findById(Long id);
 
   /**
    * Since using JPA, this definition is routed to SimpleJpaRepository implementation
-   * @param post
-   * @return
    */
   PostOneBi save(PostOneBi post);
 }
