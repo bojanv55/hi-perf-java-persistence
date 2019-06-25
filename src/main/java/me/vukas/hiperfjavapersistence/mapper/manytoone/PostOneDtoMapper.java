@@ -5,7 +5,7 @@ import me.vukas.hiperfjavapersistence.dto.manytoone.PostOneDtoWrite;
 import me.vukas.hiperfjavapersistence.entity.relationship.manytoone.PostOne;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface PostOneDtoMapper {
   PostOne map(PostOneDtoWrite dto);
   PostOneDtoRead map(PostOne post);

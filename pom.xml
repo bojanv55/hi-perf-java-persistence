@@ -108,6 +108,11 @@
 							<version>${javax-jaxb.version}</version>
 						</annotationProcessorPath>
 					</annotationProcessorPaths>
+					<compilerArgs>
+						<compilerArg>
+							-Amapstruct.defaultComponentModel=spring
+						</compilerArg>
+					</compilerArgs>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -161,6 +166,46 @@
 				</executions>
 			</plugin>
 			-->
+			<plugin>
+				<groupId>org.jooq</groupId>
+				<artifactId>jooq-codegen-maven</artifactId>
+				<version>${jooq.version}</version>
+				<!-- to enable generation uncomment this
+				<executions>
+					<execution>
+						<id>jooq-codegen</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				-->
+				<configuration>
+					<!--
+					This should spin testcontainers, load fresh liquibase schema,
+					and generate models from that schema in testcontainers
+					-->
+					<jdbc>
+						<driver>com.mysql.cj.jdbc.Driver</driver>
+						<url>jdbc:mysql://10.10.121.199:32882/hi_perf_java_pers</url>
+						<user>root</user>
+						<password>test</password>
+					</jdbc>
+					<generator>
+						<database>
+							<inputSchema>hi_perf_java_pers</inputSchema>
+						</database>
+						<target>
+							<!-- This should probably go to generated code (and not in git), and be recreated
+							each time we compile from liquibase+testcontainers
+							 -->
+							<packageName>me.vukas.jooq.db</packageName>
+							<directory>src/main/java</directory>
+						</target>
+					</generator>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

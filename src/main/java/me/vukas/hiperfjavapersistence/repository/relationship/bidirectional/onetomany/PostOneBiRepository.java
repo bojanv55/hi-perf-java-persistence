@@ -1,5 +1,10 @@
 package me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.onetomany;
 
+import static org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH;
+
+import java.util.List;
+import java.util.Optional;
+import javax.persistence.QueryHint;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi_;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.SomeEnum;
@@ -7,12 +12,6 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.RepositoryDefinition;
-
-import javax.persistence.QueryHint;
-import java.util.List;
-import java.util.Optional;
-
-import static org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH;
 
 /**
  * Instead of extending JpaRepository (and exposing all of its methods), just expose methods specified
@@ -32,7 +31,7 @@ public interface PostOneBiRepository {
 
   //if using Set<> deduplication is implicit (so we don't need DISTINCT in qry and hints)
   @QueryHints(@QueryHint(name = HINT_PASS_DISTINCT_THROUGH, value = "false"))
-  @Query("SELECT DISTINCT p FROM PostOneBi p LEFT JOIN FETCH p.comments c WHERE p.enumeration=:enumeration")
+  @Query("SELECT DISTINCT p FROM PostOneBi p LEFT JOIN FETCH p.comments c WHERE p.enumeration=:enumeration AND c.content='two'")
   List<PostOneBi> loadByEnumeration(SomeEnum enumeration);
 
   /**

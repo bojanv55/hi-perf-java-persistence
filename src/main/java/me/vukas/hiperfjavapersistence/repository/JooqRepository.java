@@ -1,7 +1,6 @@
 package me.vukas.hiperfjavapersistence.repository;
 
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.table;
+import static me.vukas.jooq.db.Tables.POST_ONE_BI;
 
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiDto;
 import org.jooq.DSLContext;
@@ -19,14 +18,12 @@ public class JooqRepository {
   public PostOneBiDto getPostOneBi(Long id) {
     return sql.selectFrom
         (
-            table("post_one_bi")
-            //can fetch only simple dtos
-            //    .leftJoin(table("post_comment_many_bi"))
-            //    .on(field("post_one_bi.id")
-            //        .eq(field("post_comment_many_bi.post_id")))
+            POST_ONE_BI
+//            .leftJoin(POST_COMMENT_MANY_BI)
+//            .on(POST_ONE_BI.ID
+//                .eq(POST_COMMENT_MANY_BI.POST_ID))
         )
-        .where(field("post_one_bi.id")
-            .eq(id))
+        .where(POST_ONE_BI.ID.eq(id))
         .fetchOneInto(PostOneBiDto.class);
   }
 }
