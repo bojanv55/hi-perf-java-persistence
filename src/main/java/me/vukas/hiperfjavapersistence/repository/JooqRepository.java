@@ -16,9 +16,17 @@ public class JooqRepository {
     this.sql = sql;
   }
 
-  public PostOneBiDto getPostOneBi(Long id){
-    return sql.selectFrom(table("post_one_bi")
-        .leftJoin(table("post_comment_many_bi")).on(field("post_one_bi.id").eq(field("post_comment_many_bi.post_id"))))
-        .where(field("post_one_bi.id").eq(id)).fetchOneInto(PostOneBiDto.class);
+  public PostOneBiDto getPostOneBi(Long id) {
+    return sql.selectFrom
+        (
+            table("post_one_bi")
+            //can fetch only simple dtos
+            //    .leftJoin(table("post_comment_many_bi"))
+            //    .on(field("post_one_bi.id")
+            //        .eq(field("post_comment_many_bi.post_id")))
+        )
+        .where(field("post_one_bi.id")
+            .eq(id))
+        .fetchOneInto(PostOneBiDto.class);
   }
 }
