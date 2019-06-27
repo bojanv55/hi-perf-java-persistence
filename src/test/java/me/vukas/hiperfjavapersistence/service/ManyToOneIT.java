@@ -2,6 +2,7 @@ package me.vukas.hiperfjavapersistence.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import me.vukas.hiperfjavapersistence.dto.manytoone.PostOneDtoUpdate;
 import me.vukas.hiperfjavapersistence.dto.manytoone.PostOneDtoWrite;
 import me.vukas.hiperfjavapersistence.entity.relationship.manytoone.PostCommentMany;
 import me.vukas.hiperfjavapersistence.entity.relationship.manytoone.PostOne;
@@ -45,11 +46,25 @@ public class ManyToOneIT {
 
     @Test
     public void savingAndReadingPostDto(){
-        PostOneDtoWrite postDto = new PostOneDtoWrite("content");
+        PostOneDtoWrite postDto = new PostOneDtoWrite("content", "dontUpdate");
         manyToOneService.newPostFromDto(postDto);
 
         manyToOneService.getPostToDto(1L).ifPresent(p -> {
             assertThat(p.getOtherAttribs()).isNotNull();
+        });
+
+        //test updating after we done insertion
+        updatingPostDto();
+    }
+
+    private void updatingPostDto(){
+        PostOneDtoUpdate postDtoUpdate = new PostOneDtoUpdate(1L, "updatedContent");
+
+        manyToOneService.updatePost(postDtoUpdate);
+
+        manyToOneService.getPostToDto(postDtoUpdate.getId()).ifPresent(p -> {
+            assertThat(p.getOtherAttribs()).isNotNull();
+            assertThat(p.getContent()).isEqualTo("updatedContent");
         });
     }
 

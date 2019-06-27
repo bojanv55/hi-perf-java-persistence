@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 import me.vukas.hiperfjavapersistence.dto.manytoone.PostOneDtoRead;
+import me.vukas.hiperfjavapersistence.dto.manytoone.PostOneDtoUpdate;
 import me.vukas.hiperfjavapersistence.dto.manytoone.PostOneDtoWrite;
 import me.vukas.hiperfjavapersistence.entity.relationship.manytoone.PostCommentMany;
 import me.vukas.hiperfjavapersistence.entity.relationship.manytoone.PostOne;
@@ -58,5 +59,13 @@ public class ManyToOneService {
     @Transactional(readOnly = true)
     public Optional<PostOneDtoRead> getPostToDto(Long postId){
         return postOneRepo.findById(postId).map(p -> postOneDtoMapper.map(p));
+    }
+
+    @Transactional
+    public void updatePost(PostOneDtoUpdate postDto) {
+        postOneRepo.findById(postDto.getId()).ifPresent(p -> {
+            postOneDtoMapper.mapInPlace(postDto, p);
+            postOneRepo.save(p);
+        });
     }
 }

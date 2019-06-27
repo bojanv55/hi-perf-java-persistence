@@ -4,11 +4,11 @@ import lombok.Data;
 
 @Data
 public class PostOneDtoWrite {
-  private Long id;
   private String content;
+  private String dontUpdate;
 
-  public PostOneDtoWrite(String content){
-    this.id = null;
+  public PostOneDtoWrite(String content, String dontUpdate){
     this.content = content;
+    this.dontUpdate = dontUpdate;
   }
 }
