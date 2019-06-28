@@ -1,6 +1,6 @@
 package me.vukas.hiperfjavapersistence.service;
 
-import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiDto;
+import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiReadDto;
 import me.vukas.hiperfjavapersistence.repository.JooqRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class JooqService {
     this.jooqRepository = jooqRepository;
   }
 
-  public PostOneBiDto getPostOneBi(Long id){
+  public PostOneBiReadDto getPostOneBi(Long id){
     return jooqRepository.getPostOneBi(id);
   }
 

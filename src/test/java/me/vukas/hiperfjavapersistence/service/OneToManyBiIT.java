@@ -3,7 +3,13 @@ package me.vukas.hiperfjavapersistence.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiDto;
+import java.util.Optional;
+import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostCommentManyBiReadDto;
+import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostCommentManyBiUpdateDto;
+import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostCommentManyBiWriteDto;
+import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiReadDto;
+import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiWriteDto;
+import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.SomeEnumDto;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostCommentManyBi;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.SomeEnum;
@@ -68,10 +74,69 @@ public class OneToManyBiIT {
 
         oneToManyBiService.addNewPost(post2);
 
-        List<PostOneBiDto> results = oneToManyBiService.findByEnum(SomeEnum.TWO);
+        List<PostOneBiReadDto> results = oneToManyBiService.findByEnum(SomeEnum.TWO);
 
         //not duplicated using de-duplication
         assertThat(results).hasSize(1);
+    }
+
+    @Test
+    public void creationAndUpdate(){
+        List<PostOneBiReadDto> exists = oneToManyBiService.findByEnum(SomeEnum.THREE);
+        assertThat(exists).isEmpty();
+
+        PostOneBiWriteDto writeDto = new PostOneBiWriteDto();
+        writeDto.setEnumeration(SomeEnumDto.THREE);
+        writeDto.setUpdateThis("writeUpdateThis");
+        writeDto.setDontUpdateThis("writeDontUpdateThis");
+
+        PostOneBiReadDto readDto = oneToManyBiService.writePost(writeDto);
+
+        PostCommentManyBiWriteDto writeComment1 = new PostCommentManyBiWriteDto();
+        writeComment1.setContent("writeCom1");
+        writeComment1.setUpdateThis("writeCom1Update");
+        writeComment1.setDontUpdateThis("writeCom1DontUpdate");
+        writeComment1.setPostId(readDto.getId());   //would be sent directly from front-end
+
+        oneToManyBiService.writeCommentToPost(writeComment1);
+
+        PostCommentManyBiWriteDto writeComment2 = new PostCommentManyBiWriteDto();
+        writeComment2.setContent("writeCom2");
+        writeComment2.setUpdateThis("writeCom2Update");
+        writeComment2.setDontUpdateThis("writeCom2DontUpdate");
+        writeComment2.setPostId(readDto.getId());
+
+        PostCommentManyBiReadDto readCommentDto2 = oneToManyBiService.writeCommentToPost(writeComment2);
+
+        Optional<PostOneBi> postWithAll = oneToManyBiService.getPostById(readDto.getId());
+
+        postWithAll.ifPresent(p -> {
+            assertThat(p.getId()).isEqualTo(readDto.getId());
+        });
+
+        PostCommentManyBiUpdateDto updateCommentDto2 = new PostCommentManyBiUpdateDto();
+        updateCommentDto2.setId(readCommentDto2.getId());
+        updateCommentDto2.setContent("newWriteCom2");
+        updateCommentDto2.setUpdateThis("newWriteCom2Update");
+
+        PostCommentManyBiReadDto updatedCommentDto2 =oneToManyBiService.updateComment(updateCommentDto2);
+
+        postWithAll = oneToManyBiService.getPostById(readDto.getId());
+
+        postWithAll.ifPresent(p -> {
+            assertThat(p.getId()).isEqualTo(readDto.getId());
+            assertThat(p.getComments()).hasSize(2);
+        });
+
+        oneToManyBiService.removeComment(readDto.getId(), updatedCommentDto2.getId());
+
+        postWithAll = oneToManyBiService.getPostById(readDto.getId());
+
+        postWithAll.ifPresent(p -> {
+            assertThat(p.getId()).isEqualTo(readDto.getId());
+            assertThat(p.getComments()).hasSize(1);
+        });
+
     }
 
 }

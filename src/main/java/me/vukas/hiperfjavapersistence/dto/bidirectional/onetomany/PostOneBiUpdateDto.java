@@ -3,7 +3,8 @@ package me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany;
 import lombok.Data;
 
 @Data
-public class PostCommentManyBiDto {
+public class PostOneBiUpdateDto {
   private Long id;
-  private String content;
+  private SomeEnumDto enumeration;
+  private String updateThis;
 }

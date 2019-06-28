@@ -2,7 +2,7 @@ package me.vukas.hiperfjavapersistence.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiDto;
+import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiReadDto;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostCommentManyBi;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.SomeEnum;
@@ -35,7 +35,7 @@ public class JooqIT {
 
     oneToManyBiService.addNewPost(pob);
 
-    PostOneBiDto dto = service.getPostOneBi(pob.getId());
+    PostOneBiReadDto dto = service.getPostOneBi(pob.getId());
 
     assertThat(dto.getId()).isEqualTo(pob.getId());
   }

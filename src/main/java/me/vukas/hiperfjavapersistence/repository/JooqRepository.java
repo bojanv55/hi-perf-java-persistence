@@ -2,7 +2,7 @@ package me.vukas.hiperfjavapersistence.repository;
 
 import static me.vukas.jooq.db.Tables.POST_ONE_BI;
 
-import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiDto;
+import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiReadDto;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +15,7 @@ public class JooqRepository {
     this.sql = sql;
   }
 
-  public PostOneBiDto getPostOneBi(Long id) {
+  public PostOneBiReadDto getPostOneBi(Long id) {
     return sql.selectFrom
         (
             POST_ONE_BI
@@ -24,6 +24,6 @@ public class JooqRepository {
 //                .eq(POST_COMMENT_MANY_BI.POST_ID))
         )
         .where(POST_ONE_BI.ID.eq(id))
-        .fetchOneInto(PostOneBiDto.class);
+        .fetchOneInto(PostOneBiReadDto.class);
   }
 }

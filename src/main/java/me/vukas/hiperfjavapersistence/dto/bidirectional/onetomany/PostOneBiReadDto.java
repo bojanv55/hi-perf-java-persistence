@@ -5,8 +5,10 @@ import java.util.Set;
 import lombok.Data;
 
 @Data
-public class PostOneBiDto {
+public class PostOneBiReadDto {
   private Long id;
   private SomeEnumDto enumeration;
-  private Set<PostCommentManyBiDto> comments = new HashSet<>();
+  private String updateThis;
+  private String dontUpdateThis;
+  private Set<PostCommentManyBiReadDto> comments = new HashSet<>();
 }

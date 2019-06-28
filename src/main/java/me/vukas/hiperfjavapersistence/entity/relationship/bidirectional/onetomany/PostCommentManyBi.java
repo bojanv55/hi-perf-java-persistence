@@ -13,6 +13,12 @@ public class PostCommentManyBi {
 
   private String content;
 
+  private String updateThis;
+
+  private String dontUpdateThis;
+
+  private Long updatedProgrammatically = 456L;
+
   @ManyToOne(fetch = FetchType.LAZY)  //eager is default
   @JoinColumn(name = "post_id")
   private PostOneBi post;
