@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Optional;
+import me.vukas.hiperfjavapersistence.dto.PageDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostCommentManyBiReadDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostCommentManyBiUpdateDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostCommentManyBiWriteDto;
@@ -136,6 +137,10 @@ public class OneToManyBiIT {
             assertThat(p.getId()).isEqualTo(readDto.getId());
             assertThat(p.getComments()).hasSize(1);
         });
+
+        PageDto<PostOneBiReadDto> paginated = oneToManyBiService.getPage(0,20);
+
+        assertThat(paginated.getContent()).hasSize(1);
 
     }
 

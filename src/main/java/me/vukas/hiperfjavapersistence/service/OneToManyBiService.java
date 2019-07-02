@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.NoResultException;
+import me.vukas.hiperfjavapersistence.dto.PageDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostCommentManyBiReadDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostCommentManyBiUpdateDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostCommentManyBiWriteDto;
@@ -12,10 +13,13 @@ import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiWrite
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostCommentManyBi;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.SomeEnum;
+import me.vukas.hiperfjavapersistence.mapper.PageMapper;
 import me.vukas.hiperfjavapersistence.mapper.bidirectional.onetomany.PostCommentManyBiMapper;
 import me.vukas.hiperfjavapersistence.mapper.bidirectional.onetomany.PostOneBiMapper;
 import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.onetomany.PostCommentManyBiRepository;
 import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.onetomany.PostOneBiRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,17 +28,20 @@ public class OneToManyBiService {
     private PostOneBiRepository postOneRepo;
     private PostCommentManyBiRepository commentManyRepo;
     private PostOneBiMapper mapper;
+    private PageMapper pageMapper;
     private PostCommentManyBiMapper commentMapper;
 
     public OneToManyBiService(
         PostOneBiRepository postOneRepo,
         PostCommentManyBiRepository commentManyRepo,
         PostOneBiMapper mapper,
+        PageMapper pageMapper,
         PostCommentManyBiMapper commentMapper) {
         this.postOneRepo = postOneRepo;
         this.commentManyRepo = commentManyRepo;
         this.mapper = mapper;
         this.commentMapper = commentMapper;
+        this.pageMapper = pageMapper;
     }
 
     public PostOneBi addNewPost(PostOneBi post){
@@ -89,5 +96,11 @@ public class OneToManyBiService {
             p.removeComment(c);
             return mapper.map(postOneRepo.save(p));
         }).orElseThrow(() -> new NoResultException("Cannot find post to remove comment from"));
+    }
+
+    public PageDto<PostOneBiReadDto> getPage(int page, int size){
+        Page<PostOneBiReadDto> postPage = postOneRepo.findAll(PageRequest.of(page, size))
+            .map(mapper::map);
+        return pageMapper.map(postPage);
     }
 }

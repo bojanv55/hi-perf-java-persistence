@@ -8,6 +8,7 @@ import javax.persistence.QueryHint;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi_;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.SomeEnum;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
@@ -18,7 +19,7 @@ import org.springframework.data.repository.RepositoryDefinition;
  * in this interface
  */
 @RepositoryDefinition(domainClass = PostOneBi.class, idClass = Long.class)
-public interface PostOneBiRepository {
+public interface PostOneBiRepository extends CustomizedPostOneBiRepository {
 
   /**
    * Method that allows eager fetching of comments (like method below), but using Query
@@ -33,6 +34,13 @@ public interface PostOneBiRepository {
   @QueryHints(@QueryHint(name = HINT_PASS_DISTINCT_THROUGH, value = "false"))
   @Query("SELECT DISTINCT p FROM PostOneBi p LEFT JOIN FETCH p.comments c WHERE p.enumeration=:enumeration AND c.content='two'")
   List<PostOneBi> loadByEnumeration(SomeEnum enumeration);
+
+  Iterable<PostOneBi> findAll(Sort sort);
+
+  //we will implement this in customized repo
+//  @Query(value = "SELECT * FROM post_one_bi p JOIN post_comment_many_bi pcmb on p.id = pcmb.post_id WHERE p.id IN (SELECT p.id FROM post_one_bi p WHERE p.id<100)",
+//  countQuery = "SELECT COUNT(p.id) FROM post_one_bi p WHERE p.id<100", nativeQuery = true)
+//  Page<PostOneBi> findAll(Pageable pageable);
 
   /**
    * Overrides default behavior of findById method - instead of lazy fetching comments, it will now
