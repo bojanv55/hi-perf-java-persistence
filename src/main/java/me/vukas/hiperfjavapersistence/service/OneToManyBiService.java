@@ -98,8 +98,8 @@ public class OneToManyBiService {
         }).orElseThrow(() -> new NoResultException("Cannot find post to remove comment from"));
     }
 
-    public PageDto<PostOneBiReadDto> getPage(int page, int size){
-        Page<PostOneBiReadDto> postPage = postOneRepo.findAll(PageRequest.of(page, size))
+    public PageDto<PostOneBiReadDto> getPage(SomeEnum someEnum, int page, int size){
+        Page<PostOneBiReadDto> postPage = postOneRepo.findAllByEnumeration(someEnum, PageRequest.of(page, size))
             .map(mapper::map);
         return pageMapper.map(postPage);
     }

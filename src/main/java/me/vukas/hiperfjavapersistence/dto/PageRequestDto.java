@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value
 public class PageRequestDto {
-  private final int page;
-  private final int size;
+  private final Integer page;
+  private final Integer size;
 }

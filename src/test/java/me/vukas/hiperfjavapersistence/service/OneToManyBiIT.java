@@ -138,10 +138,51 @@ public class OneToManyBiIT {
             assertThat(p.getComments()).hasSize(1);
         });
 
-        PageDto<PostOneBiReadDto> paginated = oneToManyBiService.getPage(0,20);
+        PageDto<PostOneBiReadDto> paginated = oneToManyBiService.getPage(SomeEnum.THREE, 0,20);
 
         assertThat(paginated.getContent()).hasSize(1);
 
+    }
+
+    @Test
+    public void paginationShouldWorkProperly(){
+        //write comments
+        for(int i=1; i<=50; i++){
+            PostOneBiWriteDto writeDto = new PostOneBiWriteDto();
+            writeDto.setEnumeration(SomeEnumDto.THREE);
+            writeDto.setUpdateThis("writeUpdateThis" + i);
+            writeDto.setDontUpdateThis("writeDontUpdateThis" + i);
+            PostOneBiReadDto readDto = oneToManyBiService.writePost(writeDto);
+            for(int j=1; j<=2; j++){
+                PostCommentManyBiWriteDto writeComment = new PostCommentManyBiWriteDto();
+                writeComment.setContent("writeCom" + i + ":" + j);
+                writeComment.setUpdateThis("writeComUpdate" + i + ":" + j);
+                writeComment.setDontUpdateThis("writeComDontUpdate" + i + ":" + j);
+                writeComment.setPostId(readDto.getId());
+                oneToManyBiService.writeCommentToPost(writeComment);
+            }
+        }
+
+        PageDto<PostOneBiReadDto> paginated = oneToManyBiService.getPage(SomeEnum.THREE, 0,20);
+
+        assertThat(paginated.getContent()).hasSize(20);
+        assertThat(paginated.getTotal()).isEqualTo(50);
+        assertThat(paginated.getPageable().getPage()).isEqualTo(0);
+        assertThat(paginated.getPageable().getSize()).isEqualTo(20);
+
+        paginated = oneToManyBiService.getPage(SomeEnum.THREE, 1,20);
+
+        assertThat(paginated.getContent()).hasSize(20);
+        assertThat(paginated.getTotal()).isEqualTo(50);
+        assertThat(paginated.getPageable().getPage()).isEqualTo(1);
+        assertThat(paginated.getPageable().getSize()).isEqualTo(20);
+
+        paginated = oneToManyBiService.getPage(SomeEnum.THREE, 2,20);
+
+        assertThat(paginated.getContent()).hasSize(10);
+        assertThat(paginated.getTotal()).isEqualTo(50);
+        assertThat(paginated.getPageable().getPage()).isEqualTo(2);
+        assertThat(paginated.getPageable().getSize()).isEqualTo(20);
     }
 
 }

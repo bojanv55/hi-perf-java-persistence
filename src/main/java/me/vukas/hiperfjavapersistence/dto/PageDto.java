@@ -5,7 +5,7 @@ import lombok.Value;
 
 @Value
 public class PageDto<T> {
-  private final Integer total;
+  private final Long total;
   private final List<T> content;
   private final PageRequestDto pageable;
 }
