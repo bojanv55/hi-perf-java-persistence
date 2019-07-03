@@ -3,9 +3,9 @@ package me.vukas.hiperfjavapersistence.service;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.manytomanyjunction.AuthorManyJ;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.manytomanyjunction.BookAuthorId;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.manytomanyjunction.BookManyJ;
-import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.manytomanyjunction.AuthorManyJRepository;
-import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.manytomanyjunction.BookAuthorRepository;
-import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.manytomanyjunction.BookManyJRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.relationship.bidirectional.manytomanyjunction.AuthorManyJRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.relationship.bidirectional.manytomanyjunction.BookAuthorRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.relationship.bidirectional.manytomanyjunction.BookManyJRepository;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;

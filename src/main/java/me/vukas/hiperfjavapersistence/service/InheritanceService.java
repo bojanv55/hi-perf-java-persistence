@@ -6,11 +6,11 @@ import me.vukas.hiperfjavapersistence.entity.inheritance.mappedsuperclass.Child2
 import me.vukas.hiperfjavapersistence.entity.inheritance.mappedsuperclass.ParentMs;
 import me.vukas.hiperfjavapersistence.entity.inheritance.singletable.ParentSt;
 import me.vukas.hiperfjavapersistence.entity.inheritance.tableperclass.ParentTPC;
-import me.vukas.hiperfjavapersistence.repository.inheritance.jointable.ParentJtRepository;
-import me.vukas.hiperfjavapersistence.repository.inheritance.mappedsuperclass.Child2MsRepository;
-import me.vukas.hiperfjavapersistence.repository.inheritance.mappedsuperclass.ParentMsRepository;
-import me.vukas.hiperfjavapersistence.repository.inheritance.singletable.ParentStRepository;
-import me.vukas.hiperfjavapersistence.repository.inheritance.tableperclass.ParentTPCRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.inheritance.jointable.ParentJtRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.inheritance.mappedsuperclass.Child2MsRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.inheritance.mappedsuperclass.ParentMsRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.inheritance.singletable.ParentStRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.inheritance.tableperclass.ParentTPCRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

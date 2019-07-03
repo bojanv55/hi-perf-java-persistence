@@ -2,8 +2,8 @@ package me.vukas.hiperfjavapersistence.service;
 
 import me.vukas.hiperfjavapersistence.entity.relationship.onetoone.PostDetailsOne;
 import me.vukas.hiperfjavapersistence.entity.relationship.onetoone.PostOneToOne;
-import me.vukas.hiperfjavapersistence.repository.relationship.onetoone.PostDetailsOneRepository;
-import me.vukas.hiperfjavapersistence.repository.relationship.onetoone.PostOneToOneRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.relationship.onetoone.PostDetailsOneRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.relationship.onetoone.PostOneToOneRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

@@ -1,7 +1,7 @@
 package me.vukas.hiperfjavapersistence.service;
 
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetoone.PostOneToOneBi;
-import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.onetoone.PostOneToOneBiRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.relationship.bidirectional.onetoone.PostOneToOneBiRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

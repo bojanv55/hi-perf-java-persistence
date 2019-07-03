@@ -6,12 +6,12 @@ import me.vukas.hiperfjavapersistence.entity.identifier.numerical.SequenceGenera
 import me.vukas.hiperfjavapersistence.entity.identifier.numerical.TableGenerator;
 import me.vukas.hiperfjavapersistence.entity.identifier.uuid.AssignedUUIDGenerator;
 import me.vukas.hiperfjavapersistence.entity.identifier.uuid.UUIDGenerator;
-import me.vukas.hiperfjavapersistence.repository.identifier.numerical.IdentityGeneratorRepository;
-import me.vukas.hiperfjavapersistence.repository.identifier.numerical.PooledSequenceGeneratorRepository;
-import me.vukas.hiperfjavapersistence.repository.identifier.numerical.SequenceGeneratorRepository;
-import me.vukas.hiperfjavapersistence.repository.identifier.numerical.TableGeneratorRepository;
-import me.vukas.hiperfjavapersistence.repository.identifier.uuid.AssignedUUIDGeneratorRepository;
-import me.vukas.hiperfjavapersistence.repository.identifier.uuid.UUIDGeneratorRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.identifier.numerical.IdentityGeneratorRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.identifier.numerical.PooledSequenceGeneratorRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.identifier.numerical.SequenceGeneratorRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.identifier.numerical.TableGeneratorRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.identifier.uuid.AssignedUUIDGeneratorRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.identifier.uuid.UUIDGeneratorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

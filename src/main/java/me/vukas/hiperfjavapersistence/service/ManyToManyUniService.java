@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
 import me.vukas.hiperfjavapersistence.entity.relationship.manytomany.PostManyUni;
 import me.vukas.hiperfjavapersistence.entity.relationship.manytomany.TagManyUni;
-import me.vukas.hiperfjavapersistence.repository.relationship.manytomany.PostManyUniRepository;
-import me.vukas.hiperfjavapersistence.repository.relationship.manytomany.TagManyUniRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.relationship.manytomany.PostManyUniRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.relationship.manytomany.TagManyUniRepository;
 import org.springframework.stereotype.Service;
 
 @Service

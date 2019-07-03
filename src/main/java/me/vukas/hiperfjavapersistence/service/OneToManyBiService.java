@@ -17,8 +17,8 @@ import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetoman
 import me.vukas.hiperfjavapersistence.mapper.PageMapper;
 import me.vukas.hiperfjavapersistence.mapper.bidirectional.onetomany.PostCommentManyBiMapper;
 import me.vukas.hiperfjavapersistence.mapper.bidirectional.onetomany.PostOneBiMapper;
-import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.onetomany.PostCommentManyBiRepository;
-import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.onetomany.PostOneBiRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.relationship.bidirectional.onetomany.PostCommentManyBiRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.relationship.bidirectional.onetomany.PostOneBiRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

@@ -2,7 +2,7 @@ package me.vukas.hiperfjavapersistence.service;
 
 import org.springframework.transaction.annotation.Transactional;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.manytomany.BookManyBi;
-import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.manytomany.BookManyBiRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.relationship.bidirectional.manytomany.BookManyBiRepository;
 import org.springframework.stereotype.Service;
 
 @Service

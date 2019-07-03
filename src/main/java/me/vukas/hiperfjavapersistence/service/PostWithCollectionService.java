@@ -1,7 +1,7 @@
 package me.vukas.hiperfjavapersistence.service;
 
 import me.vukas.hiperfjavapersistence.entity.relationship.elementcollection.PostWithCollection;
-import me.vukas.hiperfjavapersistence.repository.relationship.elementcollection.PostWithCollectionRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.relationship.elementcollection.PostWithCollectionRepository;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 

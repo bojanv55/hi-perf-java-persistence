@@ -4,7 +4,7 @@ import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
 import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.CompositeId;
 import me.vukas.hiperfjavapersistence.entity.relationship.onetomany.PostOneUni;
-import me.vukas.hiperfjavapersistence.repository.relationship.onetomany.PostOneUniRepository;
+import me.vukas.hiperfjavapersistence.repository.jpa.relationship.onetomany.PostOneUniRepository;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
