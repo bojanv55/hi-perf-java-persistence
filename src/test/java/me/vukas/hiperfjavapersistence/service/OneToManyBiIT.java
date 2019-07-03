@@ -167,22 +167,22 @@ public class OneToManyBiIT {
 
         assertThat(paginated.getContent()).hasSize(20);
         assertThat(paginated.getTotal()).isEqualTo(50);
-        assertThat(paginated.getPageable().getPage()).isEqualTo(0);
-        assertThat(paginated.getPageable().getSize()).isEqualTo(20);
+        assertThat(paginated.getPageable().getPageNumber()).isEqualTo(0);
+        assertThat(paginated.getPageable().getPageSize()).isEqualTo(20);
 
         paginated = oneToManyBiService.getPage(SomeEnum.THREE, 1,20);
 
         assertThat(paginated.getContent()).hasSize(20);
         assertThat(paginated.getTotal()).isEqualTo(50);
-        assertThat(paginated.getPageable().getPage()).isEqualTo(1);
-        assertThat(paginated.getPageable().getSize()).isEqualTo(20);
+        assertThat(paginated.getPageable().getPageNumber()).isEqualTo(1);
+        assertThat(paginated.getPageable().getPageSize()).isEqualTo(20);
 
         paginated = oneToManyBiService.getPage(SomeEnum.THREE, 2,20);
 
         assertThat(paginated.getContent()).hasSize(10);
         assertThat(paginated.getTotal()).isEqualTo(50);
-        assertThat(paginated.getPageable().getPage()).isEqualTo(2);
-        assertThat(paginated.getPageable().getSize()).isEqualTo(20);
+        assertThat(paginated.getPageable().getPageNumber()).isEqualTo(2);
+        assertThat(paginated.getPageable().getPageSize()).isEqualTo(20);
     }
 
 }
