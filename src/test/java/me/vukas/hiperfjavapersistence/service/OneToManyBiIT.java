@@ -140,7 +140,7 @@ public class OneToManyBiIT {
 
         PageDto<PostOneBiReadDto> paginated = oneToManyBiService.getPage(SomeEnum.THREE, 0,20);
 
-        assertThat(paginated.getContent()).hasSize(1);
+        assertThat(paginated.getContent()).hasSize(20);
 
     }
 

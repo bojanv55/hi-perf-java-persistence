@@ -12,6 +12,7 @@ import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiReadD
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiWriteDto;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostCommentManyBi;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi;
+import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi_;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.SomeEnum;
 import me.vukas.hiperfjavapersistence.mapper.PageMapper;
 import me.vukas.hiperfjavapersistence.mapper.bidirectional.onetomany.PostCommentManyBiMapper;
@@ -20,6 +21,7 @@ import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.onet
 import me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.onetomany.PostOneBiRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -99,7 +101,13 @@ public class OneToManyBiService {
     }
 
     public PageDto<PostOneBiReadDto> getPage(SomeEnum someEnum, int page, int size){
-        Page<PostOneBiReadDto> postPage = postOneRepo.findAllByEnumeration(someEnum, PageRequest.of(page, size))
+        Page<PostOneBiReadDto> postPage = postOneRepo
+            .findAllByEnumeration(
+                someEnum,
+                PageRequest.of(page, size, Sort.by(PostOneBi_.ID).descending().and(Sort.by(PostOneBi_.DONT_UPDATE_THIS)))
+                //PageRequest.of(page, size, Sort.by(PostOneBi_.DONT_UPDATE_THIS).descending())
+                //PageRequest.of(page, size)
+            )
             .map(mapper::map);
         return pageMapper.map(postPage);
     }

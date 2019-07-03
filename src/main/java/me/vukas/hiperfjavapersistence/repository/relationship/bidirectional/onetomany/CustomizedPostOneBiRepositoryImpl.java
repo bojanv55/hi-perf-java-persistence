@@ -1,5 +1,7 @@
 package me.vukas.hiperfjavapersistence.repository.relationship.bidirectional.onetomany;
 
+import static org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH;
+
 import java.util.List;
 import javax.persistence.EntityManager;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi;
@@ -8,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaContext;
+import org.springframework.data.jpa.repository.query.QueryUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 public class CustomizedPostOneBiRepositoryImpl implements CustomizedPostOneBiRepository {
@@ -28,39 +31,28 @@ public class CustomizedPostOneBiRepositoryImpl implements CustomizedPostOneBiRep
   @Override
   public Page<PostOneBi> findAllByEnumeration(SomeEnum enumeration, Pageable pageable) {
 
-    Long totalPosts = entityManager
-        .createQuery("select count(p.id) from PostOneBi p WHERE p.enumeration=:enumeration ", Long.class)
-        .setParameter(
-            "enumeration",
-            enumeration
-        )
+    Long total = entityManager
+        .createQuery("SELECT COUNT(p) FROM PostOneBi p WHERE p.enumeration=:enumeration", Long.class)
+        .setParameter("enumeration", enumeration)
         .getSingleResult();
 
+    String pIdsQry = "SELECT p.id FROM PostOneBi p WHERE p.enumeration=:enumeration";
+    pIdsQry = QueryUtils.applySorting(pIdsQry, pageable.getSort());
     List<Long> postIds = entityManager
-        .createQuery(
-            "select p.id from PostOneBi p WHERE p.enumeration=:enumeration ", Long.class)
-        .setParameter(
-            "enumeration",
-            enumeration
-        )
+        .createQuery(pIdsQry, Long.class)
+        .setParameter("enumeration", enumeration)
         .setMaxResults(pageable.getPageSize())
         .setFirstResult(pageable.getPageNumber() * pageable.getPageSize())
         .getResultList();
 
+    String pQry = "SELECT DISTINCT p FROM PostOneBi p LEFT JOIN FETCH p.comments WHERE p.id IN (:postIds)";
+    pQry = QueryUtils.applySorting(pQry, pageable.getSort());
     List<PostOneBi> posts = entityManager
-        .createQuery(
-            "select distinct p " +
-                "from PostOneBi p " +
-                "left join fetch p.comments " +
-                "where p.id in (:postIds)", PostOneBi.class)
+        .createQuery(pQry, PostOneBi.class)
         .setParameter("postIds", postIds)
-        .setHint(
-            "hibernate.query.passDistinctThrough",
-            false
-        )
+        .setHint(HINT_PASS_DISTINCT_THROUGH,false)
         .getResultList();
 
-    return new PageImpl<>(posts, pageable, totalPosts);
-
+    return new PageImpl<>(posts, pageable, total);
   }
 }

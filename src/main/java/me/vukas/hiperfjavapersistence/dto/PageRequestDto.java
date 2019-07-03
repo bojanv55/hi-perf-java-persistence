@@ -6,4 +6,5 @@ import lombok.Value;
 public class PageRequestDto {
   private final Integer page;
   private final Integer size;
+  private final SortDto sort;
 }
