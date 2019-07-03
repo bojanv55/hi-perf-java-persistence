@@ -27,6 +27,13 @@ public class CustomizedPostOneBiRepositoryImpl implements CustomizedPostOneBiRep
     this.entityManager = context.getEntityManagerByManagedType(PostOneBi.class);
   }
 
+  /**
+   * We cannot create this query as annotated @Query method in repo, since we want to fetch joined
+   * posts and comments. Since posts can have many comments - joined it will have many rows in SQL
+   * result set. So it can happen that for PAGE=1 PAGE_SIZE=10 we have 1 post with 10 comments and
+   * instead getting 10 posts with 1 comment, we get only 1 post with 10 comments (since join will
+   * return 10 rows).
+   */
   @Transactional(readOnly = true) //so we don't see difference between queries in this method
   @Override
   public Page<PostOneBi> findAllByEnumeration(SomeEnum enumeration, Pageable pageable) {
