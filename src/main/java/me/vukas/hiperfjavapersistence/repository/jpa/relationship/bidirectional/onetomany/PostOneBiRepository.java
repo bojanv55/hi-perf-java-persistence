@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.RepositoryDefinition;
 
 /**
@@ -19,7 +20,8 @@ import org.springframework.data.repository.RepositoryDefinition;
  * in this interface
  */
 @RepositoryDefinition(domainClass = PostOneBi.class, idClass = Long.class)
-public interface PostOneBiRepository extends CustomizedPostOneBiRepository {
+public interface PostOneBiRepository extends CustomizedPostOneBiRepository,
+    QuerydslPredicateExecutor<PostOneBi> {
 
   /**
    * Method that allows eager fetching of comments (like method below), but using Query

@@ -1,5 +1,6 @@
 package me.vukas.hiperfjavapersistence.mapper.bidirectional.onetomany;
 
+import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiNoCommentsReadDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiReadDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiUpdateDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiWriteDto;
@@ -10,6 +11,7 @@ import org.mapstruct.MappingTarget;
 @Mapper
 public interface PostOneBiMapper {
   PostOneBiReadDto map(PostOneBi post);
+  PostOneBiNoCommentsReadDto mapNoComments(PostOneBi post);
   PostOneBi map(PostOneBiWriteDto writeDto);
   void mapInPlace(PostOneBiUpdateDto updateDto, @MappingTarget PostOneBi post);
 }

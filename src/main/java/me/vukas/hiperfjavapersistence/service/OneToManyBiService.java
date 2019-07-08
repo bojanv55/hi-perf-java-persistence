@@ -1,5 +1,6 @@
 package me.vukas.hiperfjavapersistence.service;
 
+import com.querydsl.core.types.Predicate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -8,8 +9,10 @@ import me.vukas.hiperfjavapersistence.dto.PageDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostCommentManyBiReadDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostCommentManyBiUpdateDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostCommentManyBiWriteDto;
+import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiNoCommentsReadDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiReadDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiWriteDto;
+import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.SomeEnumDto;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostCommentManyBi;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi_;
@@ -21,6 +24,7 @@ import me.vukas.hiperfjavapersistence.repository.jpa.relationship.bidirectional.
 import me.vukas.hiperfjavapersistence.repository.jpa.relationship.bidirectional.onetomany.PostOneBiRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -110,5 +114,29 @@ public class OneToManyBiService {
             )
             .map(mapper::map);
         return pageMapper.map(postPage);
+    }
+
+    public PageDto<PostOneBiNoCommentsReadDto> getByPredicate(Predicate predicate, Pageable pageable){
+        Page<PostOneBiNoCommentsReadDto> postPage = postOneRepo.findAll(predicate, pageable).map(mapper::mapNoComments);
+        return pageMapper.map(postPage);
+    }
+
+    public void insertPostsOneBi(){
+        //write comments
+        for(int i=1; i<=50; i++){
+            PostOneBiWriteDto writeDto = new PostOneBiWriteDto();
+            writeDto.setEnumeration(SomeEnumDto.THREE);
+            writeDto.setUpdateThis("writeUpdateThis" + i);
+            writeDto.setDontUpdateThis("writeDontUpdateThis" + i);
+            PostOneBiReadDto readDto = writePost(writeDto);
+            for(int j=1; j<=2; j++){
+                PostCommentManyBiWriteDto writeComment = new PostCommentManyBiWriteDto();
+                writeComment.setContent("writeCom" + i + ":" + j);
+                writeComment.setUpdateThis("writeComUpdate" + i + ":" + j);
+                writeComment.setDontUpdateThis("writeComDontUpdate" + i + ":" + j);
+                writeComment.setPostId(readDto.getId());
+                writeCommentToPost(writeComment);
+            }
+        }
     }
 }
