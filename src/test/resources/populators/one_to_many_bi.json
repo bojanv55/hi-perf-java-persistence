@@ -1,0 +1,30 @@
+[
+  {
+    "_class": "me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi",
+    "@id": 1,
+    "enumeration": "ONE",
+    "updateThis": "UPDATE_THIS_POPULATOR",
+    "dontUpdateThis": "DONT_UPDATE_THIS_POPULATOR",
+    "comments": [
+      {
+        "post": 1,
+        "content": "COMMENT_CONTENT1",
+        "updateThis": "UPDATE_THIS_COMMENT1",
+        "dontUpdateThis": "DONT_UPDATE_THIS_COMMENT1"
+      },
+      {
+        "post": 1,
+        "content": "COMMENT_CONTENT2",
+        "updateThis": "UPDATE_THIS_COMMENT2",
+        "dontUpdateThis": "DONT_UPDATE_THIS_COMMENT2"
+      }
+    ]
+  },
+  {
+    "_class": "me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi",
+    "@id": 2,
+    "enumeration": "TWO",
+    "updateThis": "UPDATE_THIS_POPULATOR",
+    "dontUpdateThis": "DONT_UPDATE_THIS_POPULATOR"
+  }
+]

@@ -1,10 +1,17 @@
 package me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -25,6 +32,7 @@ public class PostOneBi {  //BEST WAY TO MAP @OneToMany (if only @ManyToOne is no
   //mappedBy = "post" --> post is attribute name inside PostCommentManyBi class (private PostOneBi post;)
   //cascade - entity state transitions are cascaded from PostOneBi to PostCommentManyBi
   //orphanRemoval - when we set post field on PostCommentManyBi to null, that postCommentManyBi will be removed from db
+  @ToString.Exclude //do not create stack overflow (since we have bi-relation)
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<PostCommentManyBi> comments = new HashSet<>();
 
