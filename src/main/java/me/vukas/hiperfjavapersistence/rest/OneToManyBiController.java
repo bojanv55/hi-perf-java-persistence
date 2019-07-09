@@ -21,6 +21,9 @@ public class OneToManyBiController {
 
   /**
    * With this, I can query any of entity properties: http://localhost:8080/postOneBi?updateThis=writeUpdateThis15
+   * postOneBi?updateThis=writeUpdateThis18&updateThis=writeUpdateThis20 -> updateThis IN (...18, ...20)
+   * postOneBi?updateThis=writeUpdateThis18 -> updateThis EQ ...18
+   * postOneBi?comments.updateThis=writeComUpdate1:1 -> comments is a collection; any comments.updateThis eq ...1:1
    */
   @GetMapping("/postOneBi")
   public PageDto<PostOneBiNoCommentsReadDto> getOneToManyBi(

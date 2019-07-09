@@ -117,7 +117,9 @@ public class OneToManyBiService {
     }
 
     public PageDto<PostOneBiNoCommentsReadDto> getByPredicate(Predicate predicate, Pageable pageable){
-        Page<PostOneBiNoCommentsReadDto> postPage = postOneRepo.findAll(predicate, pageable).map(mapper::mapNoComments);
+        Page<PostOneBiNoCommentsReadDto> postPage = postOneRepo
+            .findAll(predicate, pageable)
+            .map(mapper::mapNoComments);
         return pageMapper.map(postPage);
     }
 
