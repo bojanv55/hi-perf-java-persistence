@@ -5,10 +5,9 @@ import me.vukas.hiperfjavapersistence.dto.PageDto;
 import me.vukas.hiperfjavapersistence.dto.bidirectional.onetomany.PostOneBiNoCommentsReadDto;
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.PostOneBi;
 import me.vukas.hiperfjavapersistence.service.OneToManyBiService;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,10 +25,9 @@ public class OneToManyBiController {
   @GetMapping("/postOneBi")
   public PageDto<PostOneBiNoCommentsReadDto> getOneToManyBi(
       @QuerydslPredicate(root = PostOneBi.class) Predicate predicate,
-      @RequestParam(defaultValue = "0") int page,
-      @RequestParam(defaultValue = "20") int size
+      Pageable pageable //page=0, size=20 by default; [postOneBi?page=1&size=30&sort=enumeration,desc&sort=updateThis,asc]
   ){
-    return service.getByPredicate(predicate, PageRequest.of(page, size));
+    return service.getByPredicate(predicate, pageable);
   }
 
   @GetMapping("/postOneBi/insert")  //this should be POST
