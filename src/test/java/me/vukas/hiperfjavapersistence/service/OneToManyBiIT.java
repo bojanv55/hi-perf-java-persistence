@@ -181,23 +181,30 @@ public class OneToManyBiIT {
   }
 
   @Test
+  public void deletingAllShouldWork(){
+    oneToManyBiService.deleteAll(SomeEnum.ONE);
+    oneToManyBiService.deleteAll(SomeEnum.TWO);
+    oneToManyBiService.deleteAll(SomeEnum.THREE);
+
+    fillData();
+
+    //loops delete from post_one_bi where id=?
+    oneToManyBiService.deleteAll(SomeEnum.ONE);
+    oneToManyBiService.deleteAll(SomeEnum.TWO);
+    oneToManyBiService.deleteAll(SomeEnum.THREE);
+
+    fillData();
+
+    //delete from post_one_bi where enumeration='ONE'
+    oneToManyBiService.deleteAllInBulk(SomeEnum.ONE);
+    oneToManyBiService.deleteAllInBulk(SomeEnum.TWO);
+    oneToManyBiService.deleteAllInBulk(SomeEnum.THREE);
+  }
+
+  @Test
   public void paginationShouldWorkProperly() {
     //write comments
-    for (int i = 1; i <= 50; i++) {
-      PostOneBiWriteDto writeDto = new PostOneBiWriteDto();
-      writeDto.setEnumeration(SomeEnumDto.THREE);
-      writeDto.setUpdateThis("writeUpdateThis" + i);
-      writeDto.setDontUpdateThis("writeDontUpdateThis" + i);
-      PostOneBiReadDto readDto = oneToManyBiService.writePost(writeDto);
-      for (int j = 1; j <= 2; j++) {
-        PostCommentManyBiWriteDto writeComment = new PostCommentManyBiWriteDto();
-        writeComment.setContent("writeCom" + i + ":" + j);
-        writeComment.setUpdateThis("writeComUpdate" + i + ":" + j);
-        writeComment.setDontUpdateThis("writeComDontUpdate" + i + ":" + j);
-        writeComment.setPostId(readDto.getId());
-        oneToManyBiService.writeCommentToPost(writeComment);
-      }
-    }
+    fillData();
 
     PageDto<PostOneBiReadDto> paginated = oneToManyBiService.getPage(SomeEnum.THREE, 0, 20);
 
@@ -219,6 +226,24 @@ public class OneToManyBiIT {
     assertThat(paginated.getTotal()).isEqualTo(50);
     assertThat(paginated.getPageable().getPageNumber()).isEqualTo(2);
     assertThat(paginated.getPageable().getPageSize()).isEqualTo(20);
+  }
+
+  private void fillData(){
+    for (int i = 1; i <= 50; i++) {
+      PostOneBiWriteDto writeDto = new PostOneBiWriteDto();
+      writeDto.setEnumeration(SomeEnumDto.THREE);
+      writeDto.setUpdateThis("writeUpdateThis" + i);
+      writeDto.setDontUpdateThis("writeDontUpdateThis" + i);
+      PostOneBiReadDto readDto = oneToManyBiService.writePost(writeDto);
+      for (int j = 1; j <= 2; j++) {
+        PostCommentManyBiWriteDto writeComment = new PostCommentManyBiWriteDto();
+        writeComment.setContent("writeCom" + i + ":" + j);
+        writeComment.setUpdateThis("writeComUpdate" + i + ":" + j);
+        writeComment.setDontUpdateThis("writeComDontUpdate" + i + ":" + j);
+        writeComment.setPostId(readDto.getId());
+        oneToManyBiService.writeCommentToPost(writeComment);
+      }
+    }
   }
 
 }

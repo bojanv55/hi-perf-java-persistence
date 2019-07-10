@@ -10,6 +10,7 @@ import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetoman
 import me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany.SomeEnum;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -38,6 +39,23 @@ public interface PostOneBiRepository extends CustomizedPostOneBiRepository,
   List<PostOneBi> loadByEnumeration(SomeEnum enumeration);
 
   Iterable<PostOneBi> findAll(Sort sort);
+
+  /**
+   * Does not need @Modifying
+   * Deletes all records in db one-by-one; first comments then post and loops over all
+   */
+  void deleteAllByEnumeration(SomeEnum enumeration);  //oneByOne
+
+  /**
+   * This @Modifying - in-memory cached entities will not be updated since JPA has no idea what
+   * was deleted. So we need to sync DB state with in-memory sate
+   * clearAutomatically = true argument on annotation - remove all entities from memory but
+   * there is also problem - ALL NON FLUSHED CHANGES WILL BE LOST!
+   * flushAutomatically = true - save all entities to db
+   */
+  @Modifying(flushAutomatically = true, clearAutomatically = true)  //must be added for DML @Queries
+  @Query("DELETE FROM PostOneBi p WHERE p.enumeration=:enumeration")
+  void deleteAllInBulk(SomeEnum enumeration);
 
   //we will implement this in customized repo
 //  @Query(value = "SELECT * FROM post_one_bi p JOIN post_comment_many_bi pcmb on p.id = pcmb.post_id WHERE p.id IN (SELECT p.id FROM post_one_bi p WHERE p.id<100)",

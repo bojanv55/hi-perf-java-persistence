@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
@@ -43,6 +45,15 @@ public class PostOneBi {  //BEST WAY TO MAP @OneToMany (if only @ManyToOne is no
   //orphanRemoval - when we set post field on PostCommentManyBi to null, that postCommentManyBi will be removed from db
   @ToString.Exclude //do not create stack overflow (since we have bi-relation)
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+  //this will generate this DDL when creating schema automatically
+  //alter table post_comment_many_bi
+  //       add constraint FKqdjuhsgs3opnlxt26s15u0yqf
+  //       foreign key (post_id)
+  //       references post_one_bi (id)
+  //       on delete cascade
+  //IT IS NOT NEEDED IN CASE WE WANT TO MANUALLY SPECIFY FK CONSTRAINTS
+  //EITHER IN LIQUIBASE FILE OR MANUALLY IN SQL CREATION SCRIPTS
+  @OnDelete(action = OnDeleteAction.CASCADE)
   private Set<PostCommentManyBi> comments = new HashSet<>();
 
   public void addComment(PostCommentManyBi comment){

@@ -116,6 +116,16 @@ public class OneToManyBiService {
         return pageMapper.map(postPage);
     }
 
+    @Transactional
+    public void deleteAllInBulk(SomeEnum enumeration){
+        postOneRepo.deleteAllInBulk(enumeration);
+    }
+
+    @Transactional
+    public void deleteAll(SomeEnum enumeration){
+        postOneRepo.deleteAllByEnumeration(enumeration);
+    }
+
     public PageDto<PostOneBiNoCommentsReadDto> getByPredicate(Predicate predicate, Pageable pageable){
         Page<PostOneBiNoCommentsReadDto> postPage = postOneRepo
             .findAll(predicate, pageable)
