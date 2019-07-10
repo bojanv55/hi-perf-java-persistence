@@ -39,6 +39,14 @@ spring:
           #plan -> e.g. when call IN(1,2) and IN(1,2,3) translated to -> IN(1,2,2) and (1,2,3)
           in_clause_parameter_padding: true
     generate-ddl: true
+  data:
+    jpa:
+      repositories:
+        #startup time is decreased, since we don't wait all repos to be initialized and checked
+        #especially since we will usually use only 1 out of 100 repos in test - we can just init
+        #repos at the time we need specific repo. good for testing and local development
+        #deffered option is used for ASYNC apps
+        bootstrap-mode: lazy
 logging:
   level:
     org.hibernate.type.descriptor.sql: trace
