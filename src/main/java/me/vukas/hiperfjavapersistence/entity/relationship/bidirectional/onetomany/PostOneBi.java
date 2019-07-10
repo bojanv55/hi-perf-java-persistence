@@ -1,5 +1,6 @@
 package me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetomany;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -12,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
 @Entity
@@ -28,6 +31,12 @@ public class PostOneBi {  //BEST WAY TO MAP @OneToMany (if only @ManyToOne is no
   private String dontUpdateThis;
 
   private Long updatedProgrammatically = 123L;
+
+  @CreationTimestamp
+  private LocalDateTime createdAt;
+
+  @UpdateTimestamp
+  private LocalDateTime updatedAt;
 
   //mappedBy = "post" --> post is attribute name inside PostCommentManyBi class (private PostOneBi post;)
   //cascade - entity state transitions are cascaded from PostOneBi to PostCommentManyBi
