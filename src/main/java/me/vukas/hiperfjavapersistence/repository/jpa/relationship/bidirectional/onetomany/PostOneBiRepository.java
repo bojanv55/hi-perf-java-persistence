@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.RepositoryDefinition;
 
@@ -82,4 +83,8 @@ public interface PostOneBiRepository extends CustomizedPostOneBiRepository,
    * Since using JPA, this definition is routed to SimpleJpaRepository implementation
    */
   PostOneBi save(PostOneBi post);
+
+  //here we call plus1inout stored procedure with integer argument
+  @Procedure(procedureName = "plus1inout")
+  Integer plus1inout(Integer arg);
 }

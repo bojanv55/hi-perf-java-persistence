@@ -229,6 +229,12 @@ public class OneToManyBiIT {
   }
 
   @Test
+  public void storedProcedure(){
+    Integer response = oneToManyBiService.invokeProd(13);
+    assertThat(response).isEqualTo(14);
+  }
+
+  @Test
   public void paginationShouldWorkProperly() {
     //write comments
     fillData();

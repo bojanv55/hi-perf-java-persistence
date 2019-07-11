@@ -1,0 +1,3 @@
+DROP PROCEDURE IF EXISTS plus1inout;
+
+CREATE PROCEDURE plus1inout(IN arg INT, OUT res INT) BEGIN SELECT arg + 1 INTO res; END;

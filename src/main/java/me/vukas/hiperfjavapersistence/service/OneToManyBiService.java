@@ -175,6 +175,11 @@ public class OneToManyBiService {
         return postOneRepo.deleteAllByEnumeration(enumeration);
     }
 
+    @Transactional
+    public Integer invokeProd(Integer arg){
+        return postOneRepo.plus1inout(arg);
+    }
+
     public PageDto<PostOneBiNoCommentsReadDto> getByPredicate(Predicate predicate, Pageable pageable){
         Page<PostOneBiNoCommentsReadDto> postPage = postOneRepo
             .findAll(predicate, pageable)

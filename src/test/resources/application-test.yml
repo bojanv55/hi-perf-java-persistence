@@ -15,6 +15,11 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
+        #globally_quoted_identifiers: true #needed only if one of our fields has same name as some SQL function etc (eg MOD)
+        hbm2ddl:
+          #this is needed only if we want to use multiline sql scripts inside sql/ folder scripts dir
+          #import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
+          import_files: sql/procedures.sql
         enable_lazy_load_no_trans: false #do not allow lazy load without existing transaction
         connection:
           #https://vladmihalcea.com/why-you-should-always-use-hibernate-connection-provider_disables_autocommit-for-resource-local-jpa-transactions/
