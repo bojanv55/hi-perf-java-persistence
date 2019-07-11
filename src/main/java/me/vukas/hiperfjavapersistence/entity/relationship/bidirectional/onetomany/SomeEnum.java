@@ -3,5 +3,6 @@ package me.vukas.hiperfjavapersistence.entity.relationship.bidirectional.onetoma
 public enum SomeEnum {
     ONE,
     TWO,
-    THREE
+    THREE,
+    FOUR
 }

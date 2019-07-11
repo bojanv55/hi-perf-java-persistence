@@ -117,13 +117,62 @@ public class OneToManyBiService {
     }
 
     @Transactional
-    public void deleteAllInBulk(SomeEnum enumeration){
-        postOneRepo.deleteAllInBulk(enumeration);
+    public Optional<PostOneBiReadDto> deleteInBulkDontClear(){
+        PostOneBi post = new PostOneBi();
+        post.setEnumeration(SomeEnum.ONE);
+        postOneRepo.save(post); //save this to db
+        long id = post.getId();
+        //since here we do not clear context, even after we delete ONE
+        //that we inserted above from DB, it will still be in memory
+        //and will be returned by the findById query below (read from memory not DB)
+        postOneRepo.deleteInBulkDontClear(SomeEnum.ONE);
+        return postOneRepo.findById(id).map(p -> mapper.map(p));
     }
 
     @Transactional
-    public void deleteAll(SomeEnum enumeration){
-        postOneRepo.deleteAllByEnumeration(enumeration);
+    public Optional<PostOneBiReadDto> deleteInBulkDontFlush2(){
+        PostOneBi post = new PostOneBi();
+        post.setEnumeration(SomeEnum.FOUR);
+        post.setUpdateThis("UPDATED_BEFORE");
+        postOneRepo.save(post); //save this to db (flushed since we need ID)
+        long id = post.getId();
+        post.setUpdateThis("UPDATED_AFTER");    //THIS ONE SHOULD BE LOST BUT IS NOT???
+        postOneRepo.deleteInBulkDontFlush(SomeEnum.ONE);
+        return postOneRepo.findById(id).map(p -> mapper.map(p));
+    }
+
+    @Transactional
+    public Optional<PostOneBiReadDto> deleteInBulkClearAndFlush2(){
+        PostOneBi post = new PostOneBi();
+        post.setEnumeration(SomeEnum.FOUR);
+        post.setUpdateThis("UPDATED_BEFORE");
+        postOneRepo.save(post); //save this to db (flushed since we need ID)
+        long id = post.getId();
+        post.setUpdateThis("UPDATED_AFTER");    //THIS ONE WILL BE FLUSHED SINCE WE USE
+        //@Modifying(flushAutomatically = true, clearAutomatically = true)
+        //and it will be read from DB
+        postOneRepo.deleteAllInBulk(SomeEnum.ONE);
+        return postOneRepo.findById(id).map(p -> mapper.map(p));
+    }
+
+    @Transactional
+    public Optional<PostOneBiReadDto> deleteInBulkClearAndFlush(){
+        PostOneBi post = new PostOneBi();
+        post.setEnumeration(SomeEnum.ONE);
+        postOneRepo.save(post);
+        long id = post.getId();
+        postOneRepo.deleteAllInBulk(SomeEnum.ONE);
+        return postOneRepo.findById(id).map(p -> mapper.map(p));
+    }
+
+    @Transactional
+    public int deleteAllInBulk(SomeEnum enumeration){
+        return postOneRepo.deleteAllInBulk(enumeration);
+    }
+
+    @Transactional
+    public int deleteAll(SomeEnum enumeration){
+        return postOneRepo.deleteAllByEnumeration(enumeration);
     }
 
     public PageDto<PostOneBiNoCommentsReadDto> getByPredicate(Predicate predicate, Pageable pageable){

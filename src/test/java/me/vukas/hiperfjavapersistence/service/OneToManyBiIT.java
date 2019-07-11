@@ -191,14 +191,41 @@ public class OneToManyBiIT {
     //loops delete from post_one_bi where id=?
     oneToManyBiService.deleteAll(SomeEnum.ONE);
     oneToManyBiService.deleteAll(SomeEnum.TWO);
-    oneToManyBiService.deleteAll(SomeEnum.THREE);
+    int numberDeletedOneByOne = oneToManyBiService.deleteAll(SomeEnum.THREE);
 
     fillData();
 
     //delete from post_one_bi where enumeration='ONE'
     oneToManyBiService.deleteAllInBulk(SomeEnum.ONE);
     oneToManyBiService.deleteAllInBulk(SomeEnum.TWO);
-    oneToManyBiService.deleteAllInBulk(SomeEnum.THREE);
+    int numberDeletedBatch = oneToManyBiService.deleteAllInBulk(SomeEnum.THREE);
+
+    assertThat(numberDeletedOneByOne).isEqualTo(numberDeletedBatch);
+  }
+
+  @Test
+  public void deleteInBulkWithoutClear(){
+    //prepare DB
+    oneToManyBiService.deleteAllInBulk(SomeEnum.ONE);
+    Optional<PostOneBiReadDto> post = oneToManyBiService.deleteInBulkDontClear();
+    assertThat(post).isNotEmpty();
+  }
+
+  @Test
+  public void deleteInBulkWithoutFlush(){
+    //prepare DB
+    oneToManyBiService.deleteAllInBulk(SomeEnum.FOUR);
+    Optional<PostOneBiReadDto> postDto = oneToManyBiService.deleteInBulkDontFlush2();
+    assertThat(postDto).isNotEmpty();
+    assertThat(postDto.get().getUpdateThis()).isEqualTo("UPDATED_BEFORE");
+  }
+
+  @Test
+  public void deleteInBulkClearAndFlush(){
+    //prepare DB
+    oneToManyBiService.deleteAllInBulk(SomeEnum.ONE);
+    Optional<PostOneBiReadDto> post = oneToManyBiService.deleteInBulkClearAndFlush();
+    assertThat(post).isEmpty();
   }
 
   @Test

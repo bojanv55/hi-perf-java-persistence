@@ -44,7 +44,7 @@ public interface PostOneBiRepository extends CustomizedPostOneBiRepository,
    * Does not need @Modifying
    * Deletes all records in db one-by-one; first comments then post and loops over all
    */
-  void deleteAllByEnumeration(SomeEnum enumeration);  //oneByOne
+  int deleteAllByEnumeration(SomeEnum enumeration);  //oneByOne
 
   /**
    * This @Modifying - in-memory cached entities will not be updated since JPA has no idea what
@@ -55,7 +55,15 @@ public interface PostOneBiRepository extends CustomizedPostOneBiRepository,
    */
   @Modifying(flushAutomatically = true, clearAutomatically = true)  //must be added for DML @Queries
   @Query("DELETE FROM PostOneBi p WHERE p.enumeration=:enumeration")
-  void deleteAllInBulk(SomeEnum enumeration);
+  int deleteAllInBulk(SomeEnum enumeration);
+
+  @Modifying(clearAutomatically = true)
+  @Query("DELETE FROM PostOneBi p WHERE p.enumeration=:enumeration")
+  int deleteInBulkDontFlush(SomeEnum enumeration);
+
+  @Modifying(flushAutomatically = true)
+  @Query("DELETE FROM PostOneBi p WHERE p.enumeration=:enumeration")
+  int deleteInBulkDontClear(SomeEnum enumeration);
 
   //we will implement this in customized repo
 //  @Query(value = "SELECT * FROM post_one_bi p JOIN post_comment_many_bi pcmb on p.id = pcmb.post_id WHERE p.id IN (SELECT p.id FROM post_one_bi p WHERE p.id<100)",
